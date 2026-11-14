@@ -1,0 +1,9 @@
+job	purpose	output
+6af8c77023985fb9cd82875c	causal patching (L6,10,13,14,18,24)	runs/causal/tiny-aya-global/gen_causal.jsonl
+6af8c8a229dd05ff0367c79f	CircuitKIT EAP-IG circuits en/hi/hi-Latn/pa-Latn	runs/circuit/tiny-aya-global/
+6af8c99e29dd05ff0367c8e1	distill teacher data	runs/distill/tiny-aya-global/teacher.jsonl
+6af8c97729dd05ff0367c87e	unseen langs control+g3_14	runs/steer/tiny-aya-global/gen_{control,g3_14}_unseen_langs_v1.jsonl
+6af8c97c29dd05ff0367c88d	unseen langs g31_14	runs/steer/tiny-aya-global/gen_g31_14_unseen_langs_v1.jsonl
+6af8ca9e29dd05ff0367c9d9	attacks control+g3_14	runs/steer/tiny-aya-global/gen_{control,g3_14}_attacks_v1.jsonl
+6af8cab229dd05ff0367ca02	filler_test control+g3_14	runs/steer/tiny-aya-global/gen_{control,g3_14}_filler_test.jsonl
+6af8cab629dd05ff0367ca06	everyday_test control+g3_14	runs/steer/tiny-aya-global/gen_{control,g3_14}_everyday_test.jsonl
