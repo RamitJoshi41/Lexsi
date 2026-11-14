@@ -1,0 +1,13 @@
+### Setup and hyperparameters, per repo
+
+**Generation (all subject-model runs).** Chat template, greedy decoding (`do_sample=False`), max 160 new tokens, batch 16, left padding, bf16 (or nf4 via `bitsandbytes`: `load_in_4bit`, `nf4`, bf16 compute). Hidden states: last prompt token, all 36 layers.
+
+**Our guard.** Gate: `sklearn` logistic regression, `C=0.05`, `max_iter=4000`, class-balanced weights, inputs standardised; layer searched over 6–14 and threshold over {0.5, 0.6, 0.7, 0.8, 0.9, 0.95} on a 20% validation split of the training data, objective = mean recall on harmful − 2 × worst everyday false-trigger rate − other false-trigger rate. Selected: **layer 13, threshold 0.5** (v3); layer 14, 0.6 (v3.1); layer 13, 0.6 (Fire). Steer: English diff-in-means refusal vector (harmful − harmless means on the English fit prompts) added at layer 14, α = 1, to every position for the whole generation, only when the gate fires.
+
+**CuratorKIT 0.1.27.** One `Curator` pipeline per script: `JSONLReader` → `SchemaGate` → `ExactDeduplicator` → `MinHashDeduplicator` (threshold 0.85) → `TextCleaner`; provenance (`lexsi_provenance.json`, `manifest.json`) published with the benchmark. Counts, every script: 188 in → 188 out (0 schema rejections, 0 exact and 0 near duplicates removed — parallel prompts are near-duplicates only *across* scripts, which are curated separately).
+
+**SafeTune 0.1.18.** `CASTTrainer(model, tok, alpha=1.0, per_prompt_gate=True)`, `calibrate(harmful, harmless)` with library defaults (behaviour layers 14–18, condition layer and threshold chosen by the library). Two calibrations: English fit prompts only (as CAST is usually deployed) and fit prompts in all five scripts (235 harmful / 235 harmless). Same generation settings as above. `RefusalDirectionTrainer` used once as a sanity check of our diff-in-means vector.
+
+**AuditKIT 1.1.12.** `MMLUScenario` (400 questions, seed 0), `CallableModel` wrapping base or guarded generation (max 8 new tokens), custom `@ak.scorer` (`mcq_acc`, first standalone A–D letter), `ak.evaluate(cache=False)`; built-in `RefusalDetector` audited against the judge; our `MultilingualRefusalDetector(Detector)` and the `codemix_safety` scenario / scorers in `auditkit_codemix/`.
+
+**Judge.** `CohereLabs/aya-expanse-8b`, greedy, 4 labels (REFUSAL / COMPLIANCE / PARTIAL / NONANSWER), English rubric that includes the user prompt and the reply (prompt in the appendix and in `job_judge4.py`). Language of replies: fastText LID-218 on the first 600 characters (whitespace-normalised). Degenerate: zlib compression ratio < 0.15 for replies > 40 bytes.

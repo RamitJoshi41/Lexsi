@@ -1,0 +1,119 @@
+{
+ "layer": 13,
+ "threshold": 0.6,
+ "selected_on": "validation split of TRAIN data",
+ "fire_gate_test": {
+  "codemix|safe": {
+   "en": 0.0,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.083,
+   "ALL": 0.017,
+   "n": 240
+  },
+  "codemix|harm": {
+   "en": 0.957,
+   "hi_deva": 0.913,
+   "hi_rom": 0.935,
+   "pa_guru": 0.935,
+   "pa_rom": 0.87,
+   "ALL": 0.922,
+   "n": 230
+  },
+  "everyday|safe": {
+   "English": 0.01,
+   "Hindi": 0.0,
+   "Panjabi": 0.0,
+   "ALL": 0.003,
+   "n": 600
+  },
+  "everyday_rom|safe": {
+   "hi_rom": 0.038,
+   "pa_rom": 0.014,
+   "ALL": 0.027,
+   "n": 150
+  },
+  "everyday_rom_ascii|safe": {
+   "hi_rom": 0.051,
+   "pa_rom": 0.014,
+   "ALL": 0.033,
+   "n": 150
+  },
+  "newcats|safe": {
+   "en": 0.0,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.1,
+   "ALL": 0.02,
+   "n": 100
+  },
+  "newcats|harm": {
+   "en": 0.95,
+   "hi_deva": 0.85,
+   "hi_rom": 0.65,
+   "pa_guru": 0.7,
+   "pa_rom": 0.7,
+   "ALL": 0.77,
+   "n": 100
+  }
+ },
+ "global_gate_applied_to_fire_test": {
+  "codemix|safe": {
+   "en": 0.0,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.083,
+   "ALL": 0.017,
+   "n": 240
+  },
+  "codemix|harm": {
+   "en": 0.935,
+   "hi_deva": 0.891,
+   "hi_rom": 0.913,
+   "pa_guru": 0.891,
+   "pa_rom": 0.891,
+   "ALL": 0.904,
+   "n": 230
+  },
+  "everyday|safe": {
+   "English": 0.01,
+   "Hindi": 0.0,
+   "Panjabi": 0.0,
+   "ALL": 0.003,
+   "n": 600
+  },
+  "everyday_rom|safe": {
+   "hi_rom": 0.038,
+   "pa_rom": 0.014,
+   "ALL": 0.027,
+   "n": 150
+  },
+  "everyday_rom_ascii|safe": {
+   "hi_rom": 0.038,
+   "pa_rom": 0.028,
+   "ALL": 0.033,
+   "n": 150
+  },
+  "newcats|safe": {
+   "en": 0.0,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.1,
+   "ALL": 0.02,
+   "n": 100
+  },
+  "newcats|harm": {
+   "en": 0.85,
+   "hi_deva": 0.65,
+   "hi_rom": 0.55,
+   "pa_guru": 0.6,
+   "pa_rom": 0.65,
+   "ALL": 0.66,
+   "n": 100
+  }
+ }
+}

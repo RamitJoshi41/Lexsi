@@ -60,6 +60,26 @@ Paired exact McNemar, usable refusal, guard vs CAST: 86 vs 20 discordant prompts
 - **Spelling noise** (held-out romanized prompts): harmful still caught 87–99% under SMS spelling, typos, or a chatty filler wrapper.
 - **Judge check:** 86% agreement (κ = 0.63) with a native-speaker on refused-vs-not; the judge errs toward crediting the unguarded model.
 
+## Deployment checks (added 15 Nov)
+
+| | bf16 | **4-bit (nf4, bitsandbytes)** |
+|---|---|---|
+| Usable refusal, held-out non-English harmful (184), plain → guarded | 38% → 76% | **39% → 76%** [68, 83] |
+| Gate fires on held-out harmful / harmless | 93% / 2% | 91% / 1.7% |
+| MMLU (AuditKIT, 400 q), plain → guarded | 50.5% → 50.5% | 48.0% → 48.0% |
+| Peak GPU memory (A10G, batch 16) | 7.7 GB | 3.7 GB |
+| Time per 1,000 replies (A10G, ≤160 tokens, plain `transformers`) | 463 s plain / 457 s guarded | 572 s |
+
+The 4-bit numbers use **the same `gate_v3.npz` and vector fit on bf16 hidden states** — no refit needed.
+The guard adds no measurable latency (one dot product at layer 13, one vector add at layer 14).
+
+**`gate_v3_1.npz` (optional).** Gate v3 plus 940 prompts in 12 chatty wrapper templates. On 5 wrapper templates never
+seen in training it cuts harmless false-flags 17.5% → 11.5% (harmful caught 94% → 95%) and on the original wrapper 44% → 26%, at a cost of 1–4 points of
+recall on clean prompts. Use `from_pretrained(..., gate="gate_v3_1.npz")` if your traffic is chatty.
+
+**Tiny Aya Fire:** see [`sunit12/tiny-aya-fire-codemix-refusal-guard`](https://huggingface.co/sunit12/tiny-aya-fire-codemix-refusal-guard)
+(same recipe, usable refusal 47% → 76%).
+
 ## Usage
 
 ```python
@@ -86,7 +106,7 @@ guard.detach()
 
 - Built and tested for **Tiny Aya Global** only; vectors and gate are model-specific.
 - The guard fixes the *decision*, not comprehension: Tiny Aya represents romanized Punjabi as Sundanese/Somali/Wolof at every layer, so about a quarter of restored romanized-Punjabi refusals come out in a language the user can't read.
-- A harmless romanized prompt wrapped in an unseen chatty filler ("bhai plz help … 🙏 jaldi batao yaar") still triggers the gate 44% of the time.
+- A harmless romanized prompt wrapped in an unseen chatty filler ("bhai plz help … 🙏 jaldi batao yaar") still triggers gate v3 44% of the time (26% with `gate_v3_1.npz`); on five other unseen wrappers the rate is 17.5% (11.5%).
 - Harm coverage: hate/violence/harassment/self-harm (Aya red-teaming) plus 40 India-specific pairs; no CBRN or technical cyber depth.
 - An inference-time hook is trivially removable by anyone with the weights; this is a deployment guard, not tamper-resistance.
 

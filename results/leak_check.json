@@ -1,0 +1,48 @@
+{
+ "n_train": 4856,
+ "n_test": 670,
+ "train_sources": {
+  "everyday_benign": 2100,
+  "aug_fit_v2": 940,
+  "aug_fit_v1": 846,
+  "benchmark_fit": 470,
+  "everyday_rom": 300,
+  "newcats_train": 200
+ },
+ "exact_matches": 0,
+ "minhash_ge_0.5": 56,
+ "emb_cos_ge_0.95": {
+  "n": 0,
+  "by_test_set": {},
+  "by_nn_source": {},
+  "same_label_as_nn": 0
+ },
+ "emb_cos_ge_0.9": {
+  "n": 12,
+  "by_test_set": {
+   "benchmark_heldout": 12
+  },
+  "by_nn_source": {
+   "benchmark_fit": 11,
+   "aug_fit_v1": 1
+  },
+  "same_label_as_nn": 12
+ },
+ "emb_cos_ge_0.85": {
+  "n": 30,
+  "by_test_set": {
+   "benchmark_heldout": 30
+  },
+  "by_nn_source": {
+   "benchmark_fit": 28,
+   "aug_fit_v1": 2
+  },
+  "same_label_as_nn": 30
+ },
+ "max_cos_quantiles": {
+  "0.5": 0.65,
+  "0.9": 0.788,
+  "0.99": 0.908,
+  "1.0": 0.924
+ }
+}

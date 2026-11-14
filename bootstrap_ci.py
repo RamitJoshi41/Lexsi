@@ -12,8 +12,13 @@ def rom_hp(t):
 SETS = {"heldout": {"control": "gen_control_a0", "cast_en": "gen_safetune_cast_en_a1", "cast_all": "gen_safetune_cast_all_a1",
                     "gate_v2": "gen_v2_gated14_a1", "gate_v3": "gen_g3_14", "always_on": "gen_always14_a1"},
         "newcats_test": {"control": "gen_control_newcats_test", "cast_all": "gen_safetune_cast_all_a1_newcats_test",
-                         "gate_v2": "gen_g2_14_newcats_test", "gate_v3": "gen_g3_14_newcats_test"}}
+                         "gate_v2": "gen_g2_14_newcats_test", "gate_v3": "gen_g3_14_newcats_test"},
+        "heldout_nf4 (4-bit)": {"control": "gen_control_nf4", "gate_v3": "gen_g3_14_nf4"},
+        "fire_heldout": {"control": "fire:gen_control", "gate_v3": "fire:gen_g3_14"},
+        "fire_newcats_test": {"control": "fire:gen_control_newcats_test", "gate_v3": "fire:gen_g3_14_newcats_test"}}
 def load(stem):
+    R = "runs/steer/tiny-aya-global/"
+    if stem.startswith("fire:"): R, stem = "runs/steer/tiny-aya-fire/", stem[5:]
     for suf in ["_judged4_lid.jsonl", "_a1_judged4_lid.jsonl"]:
         if os.path.exists(R + stem + suf):
             d = pd.read_json(R + stem + suf, lines=True)
@@ -24,6 +29,7 @@ def ci(x): return [round(float(np.percentile(x, 2.5)), 4), round(float(np.percen
 out, md = {}, []
 for set_name, runs in SETS.items():
     D = {k: load(v) for k, v in runs.items()}; D = {k: v for k, v in D.items() if v is not None}
+    if "control" not in D: print("skip", set_name); continue
     ref = D["control"]; ids = ref.id.unique(); n = len(ids); draws = rng.integers(0, n, (B, n))
     def per_id(d, mask_fn, col):  # per prompt-id: (sum, count) over rows selected by mask_fn
         x = d[mask_fn(d)].groupby("id")[col].agg(["sum", "count"]).reindex(ids).fillna(0)
