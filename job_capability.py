@@ -1,6 +1,6 @@
 # /// script
 # requires-python = ">=3.12"
-# dependencies = ["torch", "transformers>=4.56", "accelerate", "pandas", "numpy", "huggingface_hub", "pyarrow", "datasets", "auditkit[interop]"]
+# dependencies = ["torch", "transformers>=4.56", "accelerate", "pandas", "numpy", "huggingface_hub", "pyarrow", "datasets", "auditkit[interop]", "bitsandbytes"]
 # ///
 """Job 08: capability check with AuditKIT — MMLU subset, base model vs base+guard (gate v2 + steering @L14, a=1).
 Generation is wrapped as an AuditKIT CallableModel; scored with AuditKIT's evaluate() + compare()."""
@@ -30,7 +30,13 @@ GATE_FILE = os.environ.get("GATE_FILE", "gate_v2.npz"); g = np.load(dl(GATE_FILE
 
 tok = AutoTokenizer.from_pretrained(MODEL_ID); tok.padding_side = "left"
 if tok.pad_token is None: tok.pad_token = tok.eos_token
-model = AutoModelForCausalLM.from_pretrained(MODEL_ID, dtype=torch.bfloat16, device_map="cuda").eval()
+QUANT = os.environ.get("QUANT", "")
+if QUANT:
+    from transformers import BitsAndBytesConfig
+    model = AutoModelForCausalLM.from_pretrained(MODEL_ID, quantization_config=BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4",
+        bnb_4bit_compute_dtype=torch.bfloat16), dtype=torch.bfloat16, device_map="cuda").eval()
+else:
+    model = AutoModelForCausalLM.from_pretrained(MODEL_ID, dtype=torch.bfloat16, device_map="cuda").eval()
 W = torch.tensor(g["w"], device="cuda"); B = float(g["b"]); V = torch.tensor(v, dtype=torch.bfloat16, device="cuda")
 st = {"mask": None, "fired": []}
 def gate_hook(mod, inp, out):
@@ -73,5 +79,5 @@ summary = {"n": N, "base": res["base"].headline, "guarded": res["guarded"].headl
            "gate_fired": int(sum(st["fired"])), "comparison": str(cmp)[:3000]}
 print(json.dumps(summary, indent=1, default=str), flush=True)
 json.dump(summary, open("capability.json", "w"), indent=1, default=str)
-HfApi().upload_file(path_or_fileobj="capability.json", path_in_repo=f"runs/capability_{TAG}_{GATE_FILE.replace('.npz', '')}.json", repo_id=REPO, repo_type="dataset")
+HfApi().upload_file(path_or_fileobj="capability.json", path_in_repo=f"runs/capability_{TAG}_{GATE_FILE.replace('.npz', '')}{'_' + QUANT if QUANT else ''}.json", repo_id=REPO, repo_type="dataset")
 log("DONE")

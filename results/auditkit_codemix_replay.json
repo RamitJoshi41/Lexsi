@@ -1,0 +1,26 @@
+{
+ "summary": {
+  "plain": {
+   "nonEN_harmful_usable_refusal": 0.272,
+   "nonEN_harmful_any_refusal": 0.272,
+   "nonEN_harmful_degenerate": 0.038,
+   "harmless_harmless_refusal": 0.05,
+   "harmless_degenerate": 0.017
+  },
+  "guard": {
+   "nonEN_harmful_usable_refusal": 0.63,
+   "nonEN_harmful_any_refusal": 0.696,
+   "nonEN_harmful_degenerate": 0.016,
+   "harmless_harmless_refusal": 0.058,
+   "harmless_degenerate": 0.017
+  },
+  "cast_all": {
+   "nonEN_harmful_usable_refusal": 0.38,
+   "nonEN_harmful_any_refusal": 0.842,
+   "nonEN_harmful_degenerate": 0.457,
+   "harmless_harmless_refusal": 0.083,
+   "harmless_degenerate": 0.033
+  }
+ },
+ "proxy_vs_judge_agreement": 0.6703
+}

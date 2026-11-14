@@ -1,0 +1,371 @@
+{
+ "layer": 14,
+ "threshold": 0.6,
+ "selected_on": "validation split of TRAIN data",
+ "v3_1_test": {
+  "codemix|safe": {
+   "en": 0.0,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.104,
+   "ALL": 0.021,
+   "n": 240
+  },
+  "codemix|harm": {
+   "en": 0.957,
+   "hi_deva": 0.935,
+   "hi_rom": 0.913,
+   "pa_guru": 0.891,
+   "pa_rom": 0.891,
+   "ALL": 0.917,
+   "n": 230
+  },
+  "everyday|safe": {
+   "English": 0.01,
+   "Hindi": 0.0,
+   "Panjabi": 0.0,
+   "ALL": 0.003,
+   "n": 600
+  },
+  "everyday_rom|safe": {
+   "hi_rom": 0.025,
+   "pa_rom": 0.014,
+   "ALL": 0.02,
+   "n": 150
+  },
+  "everyday_rom_ascii|safe": {
+   "hi_rom": 0.025,
+   "pa_rom": 0.028,
+   "ALL": 0.027,
+   "n": 150
+  },
+  "filler_t0|safe": {
+   "hi_rom": 0.021,
+   "pa_rom": 0.208,
+   "ALL": 0.115,
+   "n": 96
+  },
+  "filler_t0|harm": {
+   "hi_rom": 0.957,
+   "pa_rom": 0.978,
+   "ALL": 0.967,
+   "n": 92
+  },
+  "filler_t1|safe": {
+   "hi_rom": 0.021,
+   "pa_rom": 0.042,
+   "ALL": 0.031,
+   "n": 96
+  },
+  "filler_t1|harm": {
+   "hi_rom": 0.957,
+   "pa_rom": 0.957,
+   "ALL": 0.957,
+   "n": 92
+  },
+  "filler_t2|safe": {
+   "hi_rom": 0.229,
+   "pa_rom": 0.417,
+   "ALL": 0.323,
+   "n": 96
+  },
+  "filler_t2|harm": {
+   "hi_rom": 0.978,
+   "pa_rom": 0.978,
+   "ALL": 0.978,
+   "n": 92
+  },
+  "filler_t3|safe": {
+   "hi_rom": 0.042,
+   "pa_rom": 0.167,
+   "ALL": 0.104,
+   "n": 96
+  },
+  "filler_t3|harm": {
+   "hi_rom": 0.957,
+   "pa_rom": 0.957,
+   "ALL": 0.957,
+   "n": 92
+  },
+  "filler_t4|safe": {
+   "hi_rom": 0.0,
+   "pa_rom": 0.0,
+   "ALL": 0.0,
+   "n": 96
+  },
+  "filler_t4|harm": {
+   "hi_rom": 0.87,
+   "pa_rom": 0.891,
+   "ALL": 0.88,
+   "n": 92
+  },
+  "filler_t5|safe": {
+   "hi_rom": 0.125,
+   "pa_rom": 0.375,
+   "ALL": 0.25,
+   "n": 96
+  },
+  "filler_t5|harm": {
+   "hi_rom": 0.978,
+   "pa_rom": 1.0,
+   "ALL": 0.989,
+   "n": 92
+  },
+  "newcats|safe": {
+   "en": 0.0,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.05,
+   "ALL": 0.01,
+   "n": 100
+  },
+  "newcats|harm": {
+   "en": 0.95,
+   "hi_deva": 0.9,
+   "hi_rom": 0.65,
+   "pa_guru": 0.75,
+   "pa_rom": 0.65,
+   "ALL": 0.78,
+   "n": 100
+  },
+  "perturb|safe": {
+   "hi_rom": 0.056,
+   "pa_rom": 0.181,
+   "ALL": 0.118,
+   "n": 288
+  },
+  "perturb|harm": {
+   "hi_rom": 0.913,
+   "pa_rom": 0.877,
+   "ALL": 0.895,
+   "n": 276
+  },
+  "perturb_filler|safe": 0.26,
+  "perturb_filler|harm": 0.978,
+  "perturb_sms|safe": 0.042,
+  "perturb_sms|harm": 0.837,
+  "perturb_typo|safe": 0.052,
+  "perturb_typo|harm": 0.87
+ },
+ "v3_test": {
+  "codemix|safe": {
+   "en": 0.0,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.104,
+   "ALL": 0.021,
+   "n": 240
+  },
+  "codemix|harm": {
+   "en": 0.957,
+   "hi_deva": 0.913,
+   "hi_rom": 0.935,
+   "pa_guru": 0.935,
+   "pa_rom": 0.913,
+   "ALL": 0.93,
+   "n": 230
+  },
+  "everyday|safe": {
+   "English": 0.01,
+   "Hindi": 0.0,
+   "Panjabi": 0.0,
+   "ALL": 0.003,
+   "n": 600
+  },
+  "everyday_rom|safe": {
+   "hi_rom": 0.038,
+   "pa_rom": 0.014,
+   "ALL": 0.027,
+   "n": 150
+  },
+  "everyday_rom_ascii|safe": {
+   "hi_rom": 0.051,
+   "pa_rom": 0.042,
+   "ALL": 0.047,
+   "n": 150
+  },
+  "filler_t0|safe": {
+   "hi_rom": 0.167,
+   "pa_rom": 0.292,
+   "ALL": 0.229,
+   "n": 96
+  },
+  "filler_t0|harm": {
+   "hi_rom": 0.957,
+   "pa_rom": 0.978,
+   "ALL": 0.967,
+   "n": 92
+  },
+  "filler_t1|safe": {
+   "hi_rom": 0.042,
+   "pa_rom": 0.062,
+   "ALL": 0.052,
+   "n": 96
+  },
+  "filler_t1|harm": {
+   "hi_rom": 0.957,
+   "pa_rom": 0.935,
+   "ALL": 0.946,
+   "n": 92
+  },
+  "filler_t2|safe": {
+   "hi_rom": 0.312,
+   "pa_rom": 0.333,
+   "ALL": 0.323,
+   "n": 96
+  },
+  "filler_t2|harm": {
+   "hi_rom": 0.978,
+   "pa_rom": 0.978,
+   "ALL": 0.978,
+   "n": 92
+  },
+  "filler_t3|safe": {
+   "hi_rom": 0.188,
+   "pa_rom": 0.312,
+   "ALL": 0.25,
+   "n": 96
+  },
+  "filler_t3|harm": {
+   "hi_rom": 0.978,
+   "pa_rom": 0.957,
+   "ALL": 0.967,
+   "n": 92
+  },
+  "filler_t4|safe": {
+   "hi_rom": 0.0,
+   "pa_rom": 0.042,
+   "ALL": 0.021,
+   "n": 96
+  },
+  "filler_t4|harm": {
+   "hi_rom": 0.87,
+   "pa_rom": 0.848,
+   "ALL": 0.859,
+   "n": 92
+  },
+  "filler_t5|safe": {
+   "hi_rom": 0.292,
+   "pa_rom": 0.5,
+   "ALL": 0.396,
+   "n": 96
+  },
+  "filler_t5|harm": {
+   "hi_rom": 0.978,
+   "pa_rom": 1.0,
+   "ALL": 0.989,
+   "n": 92
+  },
+  "newcats|safe": {
+   "en": 0.1,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.1,
+   "ALL": 0.04,
+   "n": 100
+  },
+  "newcats|harm": {
+   "en": 0.95,
+   "hi_deva": 0.9,
+   "hi_rom": 0.7,
+   "pa_guru": 0.85,
+   "pa_rom": 0.7,
+   "ALL": 0.82,
+   "n": 100
+  },
+  "perturb|safe": {
+   "hi_rom": 0.118,
+   "pa_rom": 0.257,
+   "ALL": 0.188,
+   "n": 288
+  },
+  "perturb|harm": {
+   "hi_rom": 0.928,
+   "pa_rom": 0.913,
+   "ALL": 0.92,
+   "n": 276
+  },
+  "perturb_filler|safe": 0.438,
+  "perturb_filler|harm": 0.989,
+  "perturb_sms|safe": 0.073,
+  "perturb_sms|harm": 0.87,
+  "perturb_typo|safe": 0.052,
+  "perturb_typo|harm": 0.902
+ },
+ "filler_summary": {
+  "seen-by-v3-test wrapper (t5)|safe": {
+   "v3": 0.396,
+   "v3_1": 0.25,
+   "n": 96
+  },
+  "seen-by-v3-test wrapper (t5)|harm": {
+   "v3": 0.989,
+   "v3_1": 0.989,
+   "n": 92
+  },
+  "unseen templates t0-t4|safe": {
+   "v3": 0.175,
+   "v3_1": 0.115,
+   "n": 480
+  },
+  "unseen templates t0-t4|harm": {
+   "v3": 0.943,
+   "v3_1": 0.948,
+   "n": 460
+  }
+ },
+ "filler_by_template": {
+  "filler_t0|safe": {
+   "v3": 0.229,
+   "v3_1": 0.115
+  },
+  "filler_t0|harm": {
+   "v3": 0.967,
+   "v3_1": 0.967
+  },
+  "filler_t1|safe": {
+   "v3": 0.052,
+   "v3_1": 0.031
+  },
+  "filler_t1|harm": {
+   "v3": 0.946,
+   "v3_1": 0.957
+  },
+  "filler_t2|safe": {
+   "v3": 0.323,
+   "v3_1": 0.323
+  },
+  "filler_t2|harm": {
+   "v3": 0.978,
+   "v3_1": 0.978
+  },
+  "filler_t3|safe": {
+   "v3": 0.25,
+   "v3_1": 0.104
+  },
+  "filler_t3|harm": {
+   "v3": 0.967,
+   "v3_1": 0.957
+  },
+  "filler_t4|safe": {
+   "v3": 0.021,
+   "v3_1": 0.0
+  },
+  "filler_t4|harm": {
+   "v3": 0.859,
+   "v3_1": 0.88
+  },
+  "filler_t5|safe": {
+   "v3": 0.396,
+   "v3_1": 0.25
+  },
+  "filler_t5|harm": {
+   "v3": 0.989,
+   "v3_1": 0.989
+  }
+ }
+}

@@ -1,6 +1,6 @@
 # /// script
 # requires-python = ">=3.12"
-# dependencies = ["torch", "transformers>=4.56", "accelerate", "pandas", "numpy", "scikit-learn", "huggingface_hub", "pyarrow"]
+# dependencies = ["torch", "transformers>=4.56", "accelerate", "pandas", "numpy", "scikit-learn", "huggingface_hub", "pyarrow", "bitsandbytes"]
 # ///
 """Job 11 (steer v2): same as job_steer.py but config may name the refusal vector source: en | all | rom | native.
 configs: name:gate:add_layer:alpha[:vec]
@@ -52,7 +52,16 @@ else:
     TAG_SUFFIX = ""
 tok = AutoTokenizer.from_pretrained(MODEL_ID); tok.padding_side = "left"
 if tok.pad_token is None: tok.pad_token = tok.eos_token
-model = AutoModelForCausalLM.from_pretrained(MODEL_ID, dtype=torch.bfloat16, device_map="cuda").eval()
+QUANT = os.environ.get("QUANT", "")
+if QUANT:   # deployed-model check: same gate + vector (fit on bf16 hidden states), applied to a quantized model
+    from transformers import BitsAndBytesConfig
+    qc = BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_quant_type="nf4", bnb_4bit_compute_dtype=torch.bfloat16) if QUANT == "nf4" \
+        else BitsAndBytesConfig(load_in_8bit=True)
+    model = AutoModelForCausalLM.from_pretrained(MODEL_ID, quantization_config=qc, dtype=torch.bfloat16, device_map="cuda").eval()
+    TAG_SUFFIX += "_" + QUANT
+    log("loaded", QUANT, "model; GPU mem GB", round(torch.cuda.memory_allocated() / 1e9, 2))
+else:
+    model = AutoModelForCausalLM.from_pretrained(MODEL_ID, dtype=torch.bfloat16, device_map="cuda").eval()
 layers = model.model.layers
 W = torch.tensor(w_raw, dtype=torch.float32, device="cuda"); B = float(b_raw)
 
@@ -79,19 +88,26 @@ for cfg in CONFIGS.split(";"):
     parts = cfg.split(":"); name, mode, add_l, alpha = parts[:4]; vec = parts[4] if len(parts) > 4 else "en"; add_l = [int(x) for x in add_l.split(",")]; alpha = float(alpha)
     state["mode"] = mode
     hs = [layers[GATE_L].register_forward_hook(gate_hook)] + [layers[l].register_forward_hook(make_add_hook(VS[vec][l] * (np.linalg.norm(V[l]) / np.linalg.norm(VS[vec][l]) if os.environ.get("MATCH_NORM") else 1.0), alpha)) for l in add_l]
-    resp, gate_p = [None] * len(ev), [None] * len(ev)
+    resp, gate_p = [None] * len(ev), [None] * len(ev); ntok, torch_t0 = 0, time.time()
     for b in range(0, len(order), BS):
         idx = order[b:b + BS]
         enc = tok([prompts[i] for i in idx], return_tensors="pt", padding=True, add_special_tokens=False).to("cuda")
         gen = model.generate(**enc, max_new_tokens=MAX_NEW, do_sample=False, pad_token_id=tok.pad_token_id)
         for j, i in enumerate(idx):
             resp[i] = tok.decode(gen[j, enc["input_ids"].shape[1]:], skip_special_tokens=True); gate_p[i] = float(state["p"][j])
+            ntok += int((gen[j, enc["input_ids"].shape[1]:] != tok.pad_token_id).sum())
+    secs = time.time() - torch_t0
     for h in hs: h.remove()
     out = ev.copy(); out["response"] = resp; out["gate_p"] = gate_p; out["config"] = name
     path = f"runs/steer/{TAG}/gen_{name}{TAG_SUFFIX}.jsonl"
     os.makedirs(os.path.dirname("out/" + path), exist_ok=True)
     out.to_json("out/" + path, orient="records", lines=True, force_ascii=False)
     api.upload_file(path_or_fileobj="out/" + path, path_in_repo=path, repo_id=REPO, repo_type="dataset")
+    tp = {"config": name, "quant": QUANT or "bf16", "gpu": torch.cuda.get_device_name(), "n_prompts": len(ev), "batch": BS,
+          "max_new": MAX_NEW, "gen_tokens": ntok, "seconds": round(secs, 1), "tok_per_s": round(ntok / secs, 1),
+          "sec_per_1k_replies": round(secs / len(ev) * 1000, 1), "peak_mem_gb": round(torch.cuda.max_memory_allocated() / 1e9, 2)}
+    tpath = f"runs/steer/{TAG}/throughput_{name}{TAG_SUFFIX}.json"; json.dump(tp, open("out/" + tpath, "w"))
+    api.upload_file(path_or_fileobj="out/" + tpath, path_in_repo=tpath, repo_id=REPO, repo_type="dataset"); log("throughput", tp)
     fired = out.groupby(["script", "label"]).gate_p.apply(lambda s: (s > GATE_T).mean()).unstack()
     log(name, "done; gate fire rate (label 0/1):\n", fired.round(2).to_string())
 log("DONE")
