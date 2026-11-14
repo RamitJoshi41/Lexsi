@@ -1,0 +1,23 @@
+{
+ "stats": {
+  "teacher_refusal_en": 164,
+  "teacher_refusal_pa_guru": 164,
+  "teacher_refusal_hi_deva": 168,
+  "template_refusal_pa_rom": 68,
+  "teacher_refusal_hi_rom": 91,
+  "teacher_refusal_pa_rom": 196,
+  "template_refusal_hi_rom": 166,
+  "self_distill_en": 332,
+  "self_distill_pa_guru": 318,
+  "self_distill_hi_deva": 345,
+  "self_distill_pa_rom": 249,
+  "drop_harmless_hi_rom": 37,
+  "self_distill_hi_rom": 250,
+  "drop_harmless_en": 21,
+  "drop_harmless_pa_rom": 37,
+  "drop_harmless_pa_guru": 33,
+  "drop_harmless_hi_deva": 8,
+  "template_refusal_pa_guru": 1
+ },
+ "n": 2512
+}

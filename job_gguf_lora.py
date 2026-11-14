@@ -11,7 +11,7 @@ ADAPTER, BASE = sys.argv[1], sys.argv[2]
 t0 = time.time(); log = lambda *a: print(f"[{time.time()-t0:6.0f}s]", *a, flush=True)
 z = zipfile.ZipFile(io.BytesIO(urllib.request.urlopen("https://codeload.github.com/ggml-org/llama.cpp/zip/refs/heads/master").read()))
 z.extractall("llcpp"); root = os.path.join("llcpp", os.listdir("llcpp")[0]); log("llama.cpp extracted", root)
-ad = snapshot_download(ADAPTER); base = snapshot_download(BASE, allow_patterns=["*.json", "*.model", "tokenizer*"])
+ad = snapshot_download(ADAPTER); base = snapshot_download(BASE)
 out = "codemix-refusal-lora-f16.gguf"
 env = dict(os.environ, PYTHONPATH=os.path.join(root, "gguf-py"))
 r = subprocess.run([sys.executable, os.path.join(root, "convert_lora_to_gguf.py"), ad, "--base", base, "--outfile", out, "--outtype", "f16"],

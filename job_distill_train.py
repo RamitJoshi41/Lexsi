@@ -21,11 +21,18 @@ t0 = time.time(); log = lambda *a: print(f"[{time.time()-t0:6.0f}s]", *a, flush=
 api = HfApi()
 
 from aligntune.core.backend_factory import create_sft_trainer
+MODS = ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
+if os.environ.get("LORA_LAYERS"):   # circuit-guided LoRA: only the layers located by the causal / CircuitKIT analysis
+    a, b = map(int, os.environ["LORA_LAYERS"].split("-"))
+    TARGETS = [f"layers.{l}.{'self_attn' if m.endswith(('q_proj','k_proj','v_proj','o_proj')) else 'mlp'}.{m}" for l in range(a, b + 1) for m in MODS]
+else:
+    TARGETS = MODS
+log("LoRA targets:", len(TARGETS), TARGETS[:3])
 trainer = create_sft_trainer(
     model_name=MODEL_ID, dataset_name=DATA_REPO, backend="trl", split="train", output_dir="out/lora",
     num_epochs=int(EPOCHS), batch_size=8, learning_rate=LR, max_seq_length=512, precision="bf16",
     use_peft=True, lora_r=16, lora_alpha=32, lora_dropout=0.05,
-    lora_target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+    lora_target_modules=TARGETS,
     task_type="sft", seed=0, gradient_accumulation_steps=2, use_gradient_checkpointing=True, logging_steps=10,
 )
 log("trainer ready:", type(trainer).__name__)

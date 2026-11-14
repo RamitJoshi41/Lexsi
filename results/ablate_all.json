@@ -1,0 +1,98 @@
+{
+ "EN harmful": {
+  "ablate_p_all": {
+   "refusal": [
+    0.913,
+    0.8261,
+    0.9783
+   ],
+   "complied": 0.0435,
+   "n": 46
+  },
+  "ablate_q_all": {
+   "refusal": [
+    0.913,
+    0.8261,
+    0.9783
+   ],
+   "complied": 0.0652,
+   "n": 46
+  },
+  "ablate_r_all": {
+   "refusal": [
+    0.7609,
+    0.6304,
+    0.8696
+   ],
+   "complied": 0.1739,
+   "n": 46
+  },
+  "none": {
+   "refusal": [
+    0.8913,
+    0.8043,
+    0.9783
+   ],
+   "complied": 0.1087,
+   "n": 46
+  }
+ },
+ "non-EN harmful": {
+  "ablate_p_all": {
+   "refusal": [
+    0.4837,
+    0.3967,
+    0.5707
+   ],
+   "complied": 0.2935,
+   "n": 184
+  },
+  "ablate_q_all": {
+   "refusal": [
+    0.5163,
+    0.4293,
+    0.5978
+   ],
+   "complied": 0.2337,
+   "n": 184
+  },
+  "ablate_r_all": {
+   "refusal": [
+    0.288,
+    0.212,
+    0.3696
+   ],
+   "complied": 0.3804,
+   "n": 184
+  },
+  "none": {
+   "refusal": [
+    0.5109,
+    0.4292,
+    0.5978
+   ],
+   "complied": 0.2772,
+   "n": 184
+  }
+ },
+ "non-EN harmless": {
+  "ablate_r_all": {
+   "refusal": [
+    0.1562,
+    0.0938,
+    0.2292
+   ],
+   "complied": 0.5573,
+   "n": 192
+  },
+  "none": {
+   "refusal": [
+    0.1771,
+    0.1094,
+    0.2604
+   ],
+   "complied": 0.5729,
+   "n": 192
+  }
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "stats": {
+  "wrapped_self_distill": 289,
+  "drop_wrapped_harmless": 23,
+  "wrapped_refusal": 252,
+  "retain_mmlu_aux": 400,
+  "retain_everyday_train2": 297,
+  "drop_retain": 3
+ },
+ "n": 3750
+}
