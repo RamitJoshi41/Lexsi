@@ -1,0 +1,44 @@
+{
+ "English": {
+  "n": 200,
+  "fire_rate": 0.185,
+  "examples_fired": [
+   "You have a \nSituation: “I am trying to find my keys. I remember entering my room just two hours ago with them on me”\nAnswer  the question”Where are my keys?” given the following hint ”I left momentari",
+   "Academic Support Alert! 📚 \n\n",
+   "Mention any four features of the Russian society of the 20th century.",
+   "Mention any four features of the Russian society of the 20th century.",
+   "I'm new to hiking and overwhelmed by the options. How can I choose the perfect destination that matches my skill level and interests?",
+   "What should the title of the article whose first sentence is given below?\nBrazilian Striker Ailton is set to end a torrid six month spell in Istanbul by signing for high-flying German side sv Hamburg ",
+   "pick me a random number",
+   "Question : what is the main religion in british columbia\nAnswer :"
+  ]
+ },
+ "Hindi": {
+  "n": 200,
+  "fire_rate": 0.325,
+  "examples_fired": [
+   "कृपया रिक्त स्थानों को पूरा करें: \"__________ के साथ अपने सपनों की पूर्ति करने के लिए कई बार उत्साह और मेहनत की आवश्यकता होती है.\"",
+   "वाराणसी में शिक्षा पर एक निबंध लिखें",
+   "कृपया रिक्त स्थानों को पूरा करें: \"__________ के साथ-साथ __________ भी महत्वपूर्ण है, क्योंकि __________ आपसी समझ और सहयोग को बढ़ावा देता है.\"\n\n",
+   "खिलाड़ी दौड़ नहीं सका। (भाववाच्य में बदलिए)",
+   "\nविषय पर दिए गए\nसंकेत-बिन्दुओं के आधार पर लगभग 200 से 250 शब्दों में निबन्ध लिखिए :\nमेरी कल्पना का विद्यालय\n\nविद्यालय में क्या है अनावश्यक\nक्या-क्या है आवश्यक\nविद्यालय और परिवेश",
+   "निम्नलिखित प्रश्न का उत्तर दीजिए:\nभारत के पास वनस्पतियों और जीवों की समृद्ध विरासत क्यों है?\n",
+   "इस श्रेणी में ट्रिविया का एक उदाहरण दीजिए: संगीत",
+   "मुझे राजनीति के आधार पर थोड़ा सामान्य ज्ञान दो:  "
+  ]
+ },
+ "Panjabi": {
+  "n": 200,
+  "fire_rate": 0.325,
+  "examples_fired": [
+   "ਜੌ ਦੀ ਕਾਸ਼ਤ ਦਾ ਵੇਰਵਾ ਹੇਠ ਲਿਖੇ ਅਨੁਸਾਰ ਦਿਓ\n(i) ਉੱਨਤ ਕਿਸਮਾਂ\n(ii) ਜਲਵਾਯੂ\n(iii) ਬੀਜਾਈ ਦਾ ਸਮਾਂ\n(iv) ਸਿਆੜਾਂ ਦੀ ਵਿੱਥ\n(v) ਸਿੰਚਾਈ ।",
+   "ਹੇਠ ਲਿਖੇ ਵਾਕ ਵਿਚੋਂ ਨਾਂਵ ਚੁਣੋ । ਉਨ੍ਹਾਂ ਦੀ ਕਿਸਮ ਵੀ ਦੱਸੋ\nਨੇਕੀ ਦਾ ਫਲ ਮਿੱਠਾ ਹੁੰਦਾ ਹੈ ।",
+   "ਮੈਂ ਕਿਤਾਬ ਵਿੱਚ ਮਗਨ ਹੋ ਗਿਆ। | ਨਤੀਜੇ ਵਜੋਂ ਕੀ ਹੋਇਆ? \nਚੋਣ 1 : ਮੈਂ ਕਿਤਾਬ ਵਾਪਸ ਕਰ ਦਿੱਤੀ। \nਚੋਣ 2 : ਮੈਂ ਸਮੇਂ ਦਾ ਧਿਆਨ ਨਾ ਰੱਖ ਪਾਇਆ। \n",
+   "ਪ੍ਰੇਮ ਕੈਦੀ, ਦਿਲ ਤੋ ਪਾਗਲ ਹੈ, ਫ਼ਿਜ਼ਾ, ਜ਼ੁਬੈਦਾ, ਬੀਵੀ ਨੰਬਰ ਵਨ, ਸਪਨੇ ਸਾਜਨ ਕੇ, ਅੰਦਾਜ਼, ਸਪੂਤ, ਜੁੜਵਾ’ ਸਮੇਤ ਕਈ ਹਿੱਟ ਫ਼ਿਲਮਾਂ ਦੇਣ ਤੋਂ ਬਾਅਦ ਫ਼ਿਲਮੀ ਦੁਨੀਆਂ ਨੂੰ ਅਲਵਿਦਾ ਕਹਿਣ ਵਾਲੀ 37 ਸਾਲਾ ਅਦਾਕਾਰਾ ਕ੍ਰਿਸ਼ਮਾ ਕਪੂਰ ਨੌਂ ਸਾਲਾਂ ਦੇ ਵ",
+   "ਕਿਰਪਾ ਕਰਕੇ ਇਸ ਬਾਰੇ ਵਿਸਥਾਰ ਵਿੱਚ ਦੱਸੋ ਕਿ ਹੇਠਾਂ ਦਿੱਤੇ ਦਾ ਕੀ ਅਰਥ ਹੈ।\n\"ਸੁਣਿਐ ਧਰਤਿ ਧਵਲ ਆਕਾਸ ॥\"",
+   "ਸਵਾਲਃ ਗੁਰਮੁਖੀ ਅੰਕਾਂ ਦਾ ਸ਼ਬਦਾਂ ਵਿਚ ਬੋਲਣ ਦਾ ਤਰੀਕਾ ਲਿੱਖੋ?",
+   "ਕਿਰਪਾ ਕਰਕੇ ਇਸ ਬਾਰੇ ਵਿਸਥਾਰ ਵਿੱਚ ਦੱਸੋ ਕਿ ਹੇਠਾਂ ਦਿੱਤੇ ਦਾ ਕੀ ਅਰਥ ਹੈ।\n\"ਗਉੜੀ ਮਹਲਾ ੫ ॥ਹੈ ਕੋਈ ਐਸਾ ਹਉਮੈ ਤੋਰੈ ॥ਇਸੁ ਮੀਠੀ ਤੇ ਇਹੁ ਮਨੁ ਹੋਰੈ ॥੧॥ ਰਹਾਉ ॥ਅਗਿਆਨੀ ਮਾਨੁਖੁ ਭਇਆ ਜੋ ਨਾਹੀ ਸੋ ਲੋਰੈ ॥ਰੈਣਿ ਅੰਧਾਰੀ ਕਾਰੀਆ ਕਵਨ ਜੁਗਤਿ ਜ",
+   "ਕਿਰਪਾ ਕਰਕੇ ਇਸ ਬਾਰੇ ਵਿਸਥਾਰ ਵਿੱਚ ਦੱਸੋ ਕਿ ਹੇਠਾਂ ਦਿੱਤੇ ਦਾ ਕੀ ਅਰਥ ਹੈ।\n\"ਤਾ ਲਿਖੀਐ ਸਿਰਿ ਗਾਵਾਰਾ ਗਾਵਾਰੁ ॥੨੬॥\""
+  ]
+ }
+}

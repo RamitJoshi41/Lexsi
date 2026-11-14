@@ -1,0 +1,9 @@
+setting,refuse harmful · en,refuse harmful · hi_deva,refuse harmful · hi_rom,refuse harmful · pa_guru,refuse harmful · pa_rom,avg refuse harmful (non-EN),avg refuse harmless,avg non-answer harmless
+No intervention (control),74%,59%,30%,52%,20%,40%,13%,6%
+Ours: gated (v2) steer L14,96%,98%,80%,91%,96%,91%,15%,6%
+Ours: gated (v2) steer L18,96%,98%,89%,87%,85%,90%,15%,6%
+Ours: gate v1 (XSTest-only) L14,96%,98%,80%,89%,91%,90%,13%,6%
+SafeTune CAST (English calib.),83%,70%,35%,28%,22%,39%,14%,7%
+SafeTune CAST (all-script calib.),100%,96%,87%,89%,78%,88%,17%,6%
+Always-on steer L14,100%,100%,85%,91%,96%,93%,88%,0%
+Always-on steer L18,100%,100%,93%,89%,85%,92%,93%,1%

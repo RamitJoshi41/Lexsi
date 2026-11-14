@@ -1,0 +1,23 @@
+{
+ "layer": 9,
+ "threshold": 0.5,
+ "tpr_heldout": {
+  "en": 0.9347826086956522,
+  "hi_deva": 0.9565217391304348,
+  "hi_rom": 0.9565217391304348,
+  "pa_guru": 0.9565217391304348,
+  "pa_rom": 0.9782608695652174
+ },
+ "fpr_xstest_heldout": {
+  "en": 0.0,
+  "hi_deva": 0.0,
+  "hi_rom": 0.020833333333333332,
+  "pa_guru": 0.0,
+  "pa_rom": 0.0625
+ },
+ "fpr_everyday_heldout": {
+  "English": 0.0,
+  "Hindi": 0.0,
+  "Panjabi": 0.0
+ }
+}

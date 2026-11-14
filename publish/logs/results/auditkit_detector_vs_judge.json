@@ -1,0 +1,62 @@
+{
+ "tiny-aya-global": {
+  "judge_refusal_rate": {
+   "en": 0.4628,
+   "hi_deva": 0.3085,
+   "hi_rom": 0.234,
+   "pa_guru": 0.4521,
+   "pa_rom": 0.3564
+  },
+  "auditkit_refusal_rate": {
+   "en": 0.3989,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.0
+  },
+  "auditkit_recall_of_judge_refusals": {
+   "en": 0.8506,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.0
+  },
+  "agreement": {
+   "en": 0.9255,
+   "hi_deva": 0.6915,
+   "hi_rom": 0.766,
+   "pa_guru": 0.5479,
+   "pa_rom": 0.6436
+  }
+ },
+ "tiny-aya-fire": {
+  "judge_refusal_rate": {
+   "en": 0.4521,
+   "hi_deva": 0.3457,
+   "hi_rom": 0.3511,
+   "pa_guru": 0.4681,
+   "pa_rom": 0.484
+  },
+  "auditkit_refusal_rate": {
+   "en": 0.4415,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.0
+  },
+  "auditkit_recall_of_judge_refusals": {
+   "en": 0.9529,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.0
+  },
+  "agreement": {
+   "en": 0.9681,
+   "hi_deva": 0.6543,
+   "hi_rom": 0.6489,
+   "pa_guru": 0.5319,
+   "pa_rom": 0.516
+  }
+ }
+}

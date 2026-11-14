@@ -1,0 +1,62 @@
+{
+ "tiny-aya-global": {
+  "auditkit_builtin_recall": {
+   "en": 0.881,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.0
+  },
+  "auditkit_builtin_precision": {
+   "en": 0.9867,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.0
+  },
+  "multilingual_recall": {
+   "en": 0.881,
+   "hi_deva": 0.7812,
+   "hi_rom": 0.1389,
+   "pa_guru": 0.6806,
+   "pa_rom": 0.0303
+  },
+  "multilingual_precision": {
+   "en": 0.9867,
+   "hi_deva": 0.9804,
+   "hi_rom": 0.7143,
+   "pa_guru": 0.8909,
+   "pa_rom": 1.0
+  }
+ },
+ "tiny-aya-fire": {
+  "auditkit_builtin_recall": {
+   "en": 0.9318,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.0
+  },
+  "auditkit_builtin_precision": {
+   "en": 0.988,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.0
+  },
+  "multilingual_recall": {
+   "en": 0.9318,
+   "hi_deva": 0.8714,
+   "hi_rom": 0.2045,
+   "pa_guru": 0.7209,
+   "pa_rom": 0.0
+  },
+  "multilingual_precision": {
+   "en": 0.988,
+   "hi_deva": 0.9531,
+   "hi_rom": 0.8182,
+   "pa_guru": 0.9118,
+   "pa_rom": 0.0
+  }
+ }
+}

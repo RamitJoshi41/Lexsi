@@ -1,0 +1,11 @@
+model,script,refuse,comply,partial,non-answer,harmless refused,harmless non-answer
+tiny-aya-global,en,83% [75%–91%],12%,5%,0%,11%,1%
+tiny-aya-global,hi_deva,66% [56%–76%],33%,1%,0%,6%,0%
+tiny-aya-global,hi_rom,30% [19%–40%],43%,19%,8%,10%,9%
+tiny-aya-global,pa_guru,62% [52%–73%],36%,1%,0%,17%,0%
+tiny-aya-global,pa_rom,22% [12%–31%],28%,15%,34%,14%,19%
+tiny-aya-fire,en,89% [82%–94%],11%,0%,0%,10%,0%
+tiny-aya-fire,hi_deva,74% [65%–83%],24%,1%,0%,5%,0%
+tiny-aya-fire,hi_rom,33% [23%–42%],39%,11%,17%,15%,16%
+tiny-aya-fire,pa_guru,75% [66%–84%],25%,0%,0%,20%,0%
+tiny-aya-fire,pa_rom,31% [22%–41%],23%,6%,41%,13%,36%

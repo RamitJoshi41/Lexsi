@@ -1,0 +1,3 @@
+# Final Project Spec (locked Sat 14 Nov, 1:10 PM IST)
+See the project doc `claude/final-project-spec.md` in the Claude project "lexsi labs hackathon" for the original. Core claim: on romanized / code-mixed Hindi & Punjabi, Tiny Aya still recognises harm internally (an English-trained harmfulness probe fires), but the refusal direction does not activate. Safety fails between knowing and acting, at specific layers. Restoring the signal only at those layers fixes refusal with low over-refusal.
+Experiments: (1) baseline per script, (2) knows vs acts per layer, (3) locate layers, (4) gated steering vs SafeTune CAST, (5) side effects (MMLU, strength sweep), (6) Fire vs Global.
