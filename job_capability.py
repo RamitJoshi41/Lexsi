@@ -1,6 +1,6 @@
 # /// script
 # requires-python = ">=3.12"
-# dependencies = ["torch", "transformers>=4.56", "accelerate", "pandas", "numpy", "huggingface_hub", "pyarrow", "datasets", "auditkit[interop]", "bitsandbytes"]
+# dependencies = ["torch", "transformers>=4.56", "accelerate", "pandas", "numpy", "huggingface_hub", "pyarrow", "datasets", "auditkit[interop]", "bitsandbytes", "peft"]
 # ///
 """Job 08: capability check with AuditKIT — MMLU subset, base model vs base+guard (gate v2 + steering @L14, a=1).
 Generation is wrapped as an AuditKIT CallableModel; scored with AuditKIT's evaluate() + compare()."""
@@ -37,6 +37,10 @@ if QUANT:
         bnb_4bit_compute_dtype=torch.bfloat16), dtype=torch.bfloat16, device_map="cuda").eval()
 else:
     model = AutoModelForCausalLM.from_pretrained(MODEL_ID, dtype=torch.bfloat16, device_map="cuda").eval()
+ADAPTER = os.environ.get("ADAPTER", "")   # Day 4: compare base vs base+distilled LoRA (no hooks) instead of the hook guard
+if ADAPTER:
+    from peft import PeftModel
+    lora_model = PeftModel.from_pretrained(AutoModelForCausalLM.from_pretrained(MODEL_ID, dtype=torch.bfloat16, device_map="cuda"), ADAPTER).merge_and_unload().eval()
 W = torch.tensor(g["w"], device="cuda"); B = float(g["b"]); V = torch.tensor(v, dtype=torch.bfloat16, device="cuda")
 st = {"mask": None, "fired": []}
 def gate_hook(mod, inp, out):
@@ -51,13 +55,14 @@ def add_hook(mod, inp, out):
 
 def make_fn(guard):
     def fn(prompts):
-        hs = [model.model.layers[GL].register_forward_hook(gate_hook), model.model.layers[ADD_L].register_forward_hook(add_hook)] if guard else []
+        mdl = lora_model if (guard and ADAPTER) else model
+        hs = [model.model.layers[GL].register_forward_hook(gate_hook), model.model.layers[ADD_L].register_forward_hook(add_hook)] if (guard and not ADAPTER) else []
         outs = []
         for b in range(0, len(prompts), BS):
             chunk = [tok.apply_chat_template([{"role": "user", "content": p + "\nReply with only the letter (A, B, C or D) of the correct option."}],
                                              add_generation_prompt=True, tokenize=False) for p in prompts[b:b+BS]]
             enc = tok(chunk, return_tensors="pt", padding=True, add_special_tokens=False).to("cuda")
-            gen = model.generate(**enc, max_new_tokens=8, do_sample=False, pad_token_id=tok.pad_token_id)
+            gen = mdl.generate(**enc, max_new_tokens=8, do_sample=False, pad_token_id=tok.pad_token_id)
             outs += [tok.decode(gen[j, enc["input_ids"].shape[1]:], skip_special_tokens=True) for j in range(len(chunk))]
         for h in hs: h.remove()
         return outs
@@ -79,5 +84,5 @@ summary = {"n": N, "base": res["base"].headline, "guarded": res["guarded"].headl
            "gate_fired": int(sum(st["fired"])), "comparison": str(cmp)[:3000]}
 print(json.dumps(summary, indent=1, default=str), flush=True)
 json.dump(summary, open("capability.json", "w"), indent=1, default=str)
-HfApi().upload_file(path_or_fileobj="capability.json", path_in_repo=f"runs/capability_{TAG}_{GATE_FILE.replace('.npz', '')}{'_' + QUANT if QUANT else ''}.json", repo_id=REPO, repo_type="dataset")
+HfApi().upload_file(path_or_fileobj="capability.json", path_in_repo=f"runs/capability_{TAG}_{(ADAPTER.split('/')[-1]) if ADAPTER else GATE_FILE.replace('.npz', '')}{'_' + QUANT if QUANT else ''}.json", repo_id=REPO, repo_type="dataset")
 log("DONE")

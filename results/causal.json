@@ -1,0 +1,500 @@
+{
+ "baseline_codemix_refusal": [
+  0.5109,
+  [
+   0.4293,
+   0.5978
+  ]
+ ],
+ "baseline_english_refusal": [
+  0.8913,
+  [
+   0.7826,
+   0.9783
+  ]
+ ],
+ "by_layer": {
+  "6": {
+   "full": [
+    0.5054,
+    [
+     0.4185,
+     0.5924
+    ]
+   ],
+   "refusal": [
+    0.4946,
+    [
+     0.4076,
+     0.5815
+    ]
+   ],
+   "harm": [
+    0.5109,
+    [
+     0.4239,
+     0.5978
+    ]
+   ],
+   "allbutref": [
+    0.5,
+    [
+     0.413,
+     0.587
+    ]
+   ],
+   "random": [
+    0.5,
+    [
+     0.4185,
+     0.5762
+    ]
+   ],
+   "en_ablate": [
+    0.913,
+    [
+     0.8261,
+     0.9783
+    ]
+   ],
+   "gap_closed": {
+    "refusal": null,
+    "harm": null,
+    "allbutref": null,
+    "random": null
+   }
+  },
+  "10": {
+   "full": [
+    0.5163,
+    [
+     0.4239,
+     0.6033
+    ]
+   ],
+   "refusal": [
+    0.5,
+    [
+     0.413,
+     0.587
+    ]
+   ],
+   "harm": [
+    0.5054,
+    [
+     0.4185,
+     0.5871
+    ]
+   ],
+   "allbutref": [
+    0.5326,
+    [
+     0.4457,
+     0.6196
+    ]
+   ],
+   "random": [
+    0.4946,
+    [
+     0.4185,
+     0.5815
+    ]
+   ],
+   "en_ablate": [
+    0.913,
+    [
+     0.8261,
+     0.9783
+    ]
+   ],
+   "gap_closed": {
+    "refusal": null,
+    "harm": null,
+    "allbutref": null,
+    "random": null
+   }
+  },
+  "13": {
+   "full": [
+    0.5272,
+    [
+     0.451,
+     0.6033
+    ]
+   ],
+   "refusal": [
+    0.4946,
+    [
+     0.4076,
+     0.5761
+    ]
+   ],
+   "harm": [
+    0.5054,
+    [
+     0.4185,
+     0.587
+    ]
+   ],
+   "allbutref": [
+    0.5272,
+    [
+     0.4457,
+     0.6087
+    ]
+   ],
+   "random": [
+    0.5,
+    [
+     0.4076,
+     0.587
+    ]
+   ],
+   "en_ablate": [
+    0.8478,
+    [
+     0.7391,
+     0.9348
+    ]
+   ],
+   "gap_closed": {
+    "refusal": null,
+    "harm": null,
+    "allbutref": null,
+    "random": null
+   }
+  },
+  "14": {
+   "full": [
+    0.538,
+    [
+     0.4511,
+     0.6304
+    ]
+   ],
+   "refusal": [
+    0.5109,
+    [
+     0.4185,
+     0.5924
+    ]
+   ],
+   "harm": [
+    0.5,
+    [
+     0.4185,
+     0.5924
+    ]
+   ],
+   "allbutref": [
+    0.5163,
+    [
+     0.4293,
+     0.6033
+    ]
+   ],
+   "random": [
+    0.4946,
+    [
+     0.4076,
+     0.5762
+    ]
+   ],
+   "en_ablate": [
+    0.8696,
+    [
+     0.7609,
+     0.9565
+    ]
+   ],
+   "gap_closed": {
+    "refusal": 0.0,
+    "harm": -0.402,
+    "allbutref": 0.199,
+    "random": -0.601
+   }
+  },
+  "18": {
+   "full": [
+    0.5652,
+    [
+     0.4783,
+     0.6467
+    ]
+   ],
+   "refusal": [
+    0.5543,
+    [
+     0.4674,
+     0.6467
+    ]
+   ],
+   "harm": [
+    0.4837,
+    [
+     0.3967,
+     0.5707
+    ]
+   ],
+   "allbutref": [
+    0.5761,
+    [
+     0.4891,
+     0.663
+    ]
+   ],
+   "random": [
+    0.4946,
+    [
+     0.4076,
+     0.5762
+    ]
+   ],
+   "en_ablate": [
+    0.913,
+    [
+     0.8261,
+     0.9783
+    ]
+   ],
+   "gap_closed": {
+    "refusal": 0.799,
+    "harm": -0.501,
+    "allbutref": 1.201,
+    "random": -0.3
+   }
+  },
+  "24": {
+   "full": [
+    0.6848,
+    [
+     0.5761,
+     0.7826
+    ]
+   ],
+   "refusal": [
+    0.5707,
+    [
+     0.4783,
+     0.6685
+    ]
+   ],
+   "harm": [
+    0.5054,
+    [
+     0.413,
+     0.6033
+    ]
+   ],
+   "allbutref": [
+    0.5217,
+    [
+     0.4239,
+     0.6196
+    ]
+   ],
+   "random": [
+    0.5,
+    [
+     0.4076,
+     0.5815
+    ]
+   ],
+   "en_ablate": [
+    0.913,
+    [
+     0.8261,
+     0.9783
+    ]
+   ],
+   "gap_closed": {
+    "refusal": 0.344,
+    "harm": -0.032,
+    "allbutref": 0.062,
+    "random": -0.063
+   }
+  }
+ },
+ "by_script": {
+  "6": {
+   "hi_deva": {
+    "allbutref": 0.804,
+    "full": 0.761,
+    "harm": 0.717,
+    "random": 0.717,
+    "refusal": 0.739
+   },
+   "hi_rom": {
+    "allbutref": 0.348,
+    "full": 0.413,
+    "harm": 0.348,
+    "random": 0.37,
+    "refusal": 0.283
+   },
+   "pa_guru": {
+    "allbutref": 0.63,
+    "full": 0.63,
+    "harm": 0.652,
+    "random": 0.63,
+    "refusal": 0.652
+   },
+   "pa_rom": {
+    "allbutref": 0.217,
+    "full": 0.217,
+    "harm": 0.326,
+    "random": 0.283,
+    "refusal": 0.304
+   }
+  },
+  "10": {
+   "hi_deva": {
+    "allbutref": 0.804,
+    "full": 0.783,
+    "harm": 0.717,
+    "random": 0.717,
+    "refusal": 0.739
+   },
+   "hi_rom": {
+    "allbutref": 0.37,
+    "full": 0.304,
+    "harm": 0.37,
+    "random": 0.348,
+    "refusal": 0.37
+   },
+   "pa_guru": {
+    "allbutref": 0.63,
+    "full": 0.63,
+    "harm": 0.63,
+    "random": 0.63,
+    "refusal": 0.652
+   },
+   "pa_rom": {
+    "allbutref": 0.326,
+    "full": 0.348,
+    "harm": 0.304,
+    "random": 0.283,
+    "refusal": 0.239
+   }
+  },
+  "13": {
+   "hi_deva": {
+    "allbutref": 0.783,
+    "full": 0.717,
+    "harm": 0.739,
+    "random": 0.739,
+    "refusal": 0.717
+   },
+   "hi_rom": {
+    "allbutref": 0.37,
+    "full": 0.37,
+    "harm": 0.391,
+    "random": 0.348,
+    "refusal": 0.348
+   },
+   "pa_guru": {
+    "allbutref": 0.717,
+    "full": 0.717,
+    "harm": 0.63,
+    "random": 0.63,
+    "refusal": 0.674
+   },
+   "pa_rom": {
+    "allbutref": 0.239,
+    "full": 0.304,
+    "harm": 0.261,
+    "random": 0.283,
+    "refusal": 0.239
+   }
+  },
+  "14": {
+   "hi_deva": {
+    "allbutref": 0.739,
+    "full": 0.783,
+    "harm": 0.696,
+    "random": 0.696,
+    "refusal": 0.739
+   },
+   "hi_rom": {
+    "allbutref": 0.391,
+    "full": 0.348,
+    "harm": 0.37,
+    "random": 0.391,
+    "refusal": 0.283
+   },
+   "pa_guru": {
+    "allbutref": 0.696,
+    "full": 0.696,
+    "harm": 0.652,
+    "random": 0.63,
+    "refusal": 0.674
+   },
+   "pa_rom": {
+    "allbutref": 0.239,
+    "full": 0.326,
+    "harm": 0.283,
+    "random": 0.261,
+    "refusal": 0.348
+   }
+  },
+  "18": {
+   "hi_deva": {
+    "allbutref": 0.804,
+    "full": 0.783,
+    "harm": 0.674,
+    "random": 0.717,
+    "refusal": 0.739
+   },
+   "hi_rom": {
+    "allbutref": 0.435,
+    "full": 0.391,
+    "harm": 0.326,
+    "random": 0.37,
+    "refusal": 0.348
+   },
+   "pa_guru": {
+    "allbutref": 0.717,
+    "full": 0.739,
+    "harm": 0.63,
+    "random": 0.63,
+    "refusal": 0.739
+   },
+   "pa_rom": {
+    "allbutref": 0.348,
+    "full": 0.348,
+    "harm": 0.304,
+    "random": 0.261,
+    "refusal": 0.391
+   }
+  },
+  "24": {
+   "hi_deva": {
+    "allbutref": 0.739,
+    "full": 0.761,
+    "harm": 0.696,
+    "random": 0.674,
+    "refusal": 0.761
+   },
+   "hi_rom": {
+    "allbutref": 0.391,
+    "full": 0.609,
+    "harm": 0.37,
+    "random": 0.391,
+    "refusal": 0.413
+   },
+   "pa_guru": {
+    "allbutref": 0.652,
+    "full": 0.739,
+    "harm": 0.652,
+    "random": 0.63,
+    "refusal": 0.674
+   },
+   "pa_rom": {
+    "allbutref": 0.304,
+    "full": 0.63,
+    "harm": 0.304,
+    "random": 0.304,
+    "refusal": 0.435
+   }
+  }
+ }
+}

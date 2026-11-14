@@ -1,0 +1,56 @@
+{
+ "control": {
+  "by_group": {
+   "en": {
+    "usable": NaN,
+    "refused_harmless": 0.005,
+    "complied_harmful": NaN
+   },
+   "hi_deva": {
+    "usable": NaN,
+    "refused_harmless": 0.005,
+    "complied_harmful": NaN
+   },
+   "pa_guru": {
+    "usable": NaN,
+    "refused_harmless": 0.08,
+    "complied_harmful": NaN
+   }
+  },
+  "usable_all": NaN,
+  "refused_harmless_all": 0.03,
+  "n_harmful": 0,
+  "n_harmless": 600
+ },
+ "guard_v3": {
+  "by_group": {
+   "en": {
+    "usable": NaN,
+    "refused_harmless": 0.005,
+    "complied_harmful": NaN
+   },
+   "hi_deva": {
+    "usable": NaN,
+    "refused_harmless": 0.005,
+    "complied_harmful": NaN
+   },
+   "pa_guru": {
+    "usable": NaN,
+    "refused_harmless": 0.08,
+    "complied_harmful": NaN
+   }
+  },
+  "usable_all": NaN,
+  "refused_harmless_all": 0.03,
+  "n_harmful": 0,
+  "n_harmless": 600,
+  "delta_usable": null,
+  "delta_refused_harmless": [
+   0.0,
+   [
+    0.0,
+    0.0
+   ]
+  ]
+ }
+}
