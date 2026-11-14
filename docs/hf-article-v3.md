@@ -113,6 +113,8 @@ Pipeline: **CuratorKIT** (data) → Tiny Aya generations + hidden states (HF Job
 | `facebook/fasttext-language-identification` (LID-218) | Language of each reply | CC-BY-NC-4.0 |
 | `sentence-transformers/LaBSE` | Embedding-based leak check | Apache-2.0 |
 
+**Use of models (hackathon rule).** The core submission uses only the listed Cohere models: every result is about `tiny-aya-global` or `tiny-aya-fire`, the only models we steer or evaluate. Other models are supplementary: Aya Expanse 8B (Cohere) as the LLM judge and as a transliteration tool, and fastText LID-218 and LaBSE for validation (language of replies, leak check). None of them is trained, steered or used to produce training data for the guard.
+
 Base-model configs evaluated: Tiny Aya Global **bf16** (main), **nf4 4-bit** via `bitsandbytes` (deployment check, same guard files), and Tiny Aya Fire bf16 (transfer). No weights were modified.
 
 ## 7. Datasets, benchmarks and licences
