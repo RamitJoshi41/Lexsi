@@ -1,0 +1,34 @@
+heldout
+                                                                       0                              1                                 2                    3                            4                                       5                                          6                    7
+setting                                        No intervention (control)  SafeTune CAST, English calib.  SafeTune CAST, all-script calib.  Ours: gate v2 → L14  Ours: gate v3 → L14 (final)  Ours: gate v2 → L14, all-script vector  Ours: gate v2 → L14, native-script vector  Always-on steer L14
+refuse en                                                            74%                            83%                              100%                  96%                          96%                                     96%                                        96%                 100%
+refuse hi_deva                                                       59%                            70%                               96%                  98%                          93%                                     98%                                        98%                 100%
+refuse hi_rom                                                        30%                            35%                               87%                  80%                          78%                                     83%                                        76%                  85%
+refuse pa_guru                                                       52%                            28%                               89%                  91%                          85%                                     78%                                        87%                  91%
+refuse pa_rom                                                        20%                            22%                               78%                  96%                          89%                                     80%                                        91%                  96%
+avg refuse (non-EN)                                                  40%                            39%                               88%                  91%                          86%                                     85%                                        88%                  93%
+**usable refusal (non-EN)**                                          38%                             7%                               40%                  81%                          76%                                     72%                                        74%                  82%
+usable hi_rom / pa_rom                                         26% / 15%                       7% / 13%                         48% / 43%            65% / 70%                    63% / 63%                               65% / 48%                                  61% / 52%            70% / 67%
+complied (non-EN)                                                     75                             52                                10                    9                           14                                      16                                         15                    8
+degenerate (non-EN harmful)                                           4%                            46%                               46%                   1%                           2%                                      1%                                         1%                   1%
+harmless refused /240                                                 32                             33                                41                   35                           35                                      34                                         35                  210
+vs CAST-all, refusal: CAST-only/ours-only (p)               87/0 (0.000)                   90/0 (0.000)                       0/0 (1.000)        11/18 (0.265)                15/13 (0.851)                           19/14 (0.487)                              16/17 (1.000)        12/22 (0.121)
+vs CAST-all, usable: CAST-only/ours-only (p)                46/42 (0.75)                 67/5 (6.4e-15)                           0/0 (1)      17/92 (1.2e-13)              20/86 (6.2e-11)                         19/78 (1.2e-09)                            20/83 (2.7e-10)        18/95 (8e-14)
+
+newcats_test
+                                                                       0                                 1                    2                            3
+setting                                        No intervention (control)  SafeTune CAST, all-script calib.  Ours: gate v2 → L14  Ours: gate v3 → L14 (final)
+refuse en                                                            90%                               90%                  90%                          95%
+refuse hi_deva                                                       65%                               95%                  65%                         100%
+refuse hi_rom                                                        35%                               80%                  50%                          80%
+refuse pa_guru                                                       65%                               90%                  70%                          80%
+refuse pa_rom                                                        30%                               70%                  55%                          70%
+avg refuse (non-EN)                                                  49%                               84%                  60%                          82%
+**usable refusal (non-EN)**                                          46%                               52%                  55%                          75%
+usable hi_rom / pa_rom                                         35% / 20%                         45% / 55%            50% / 35%                    70% / 50%
+complied (non-EN)                                                     30                                 5                   21                            8
+degenerate (non-EN harmful)                                           2%                               32%                   4%                           2%
+harmless refused /100                                                  0                                 1                    8                            4
+vs CAST-all, refusal: CAST-only/ours-only (p)               28/0 (0.000)                       0/0 (1.000)         19/0 (0.000)                  5/4 (1.000)
+vs CAST-all, usable: CAST-only/ours-only (p)                17/12 (0.46)                           0/0 (1)         11/13 (0.84)                6/24 (0.0014)
+

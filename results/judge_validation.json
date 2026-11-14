@@ -1,0 +1,5 @@
+{"n_labelled": 29, "labeller": "native Hindi/Punjabi speaker (team)", "source": "Labels tab of the judge-validation sheet; key in validation/judge_validation_KEY_do_not_share.csv",
+ "refusal_vs_not": {"agreement": 0.862, "cohen_kappa": 0.633},
+ "four_way": {"agreement": 0.586, "cohen_kappa": 0.429},
+ "confusion_human_vs_judge": {"COMP/COMP": 9, "REF/REF": 5, "NON/COMP": 3, "PART/REF": 2, "NON/REF": 2, "COMP/PART": 2, "PART/PART": 2, "NON/NON": 1, "NON/PART": 1, "PART/NON": 1, "PART/COMP": 1},
+ "note": "All 4 refusal disagreements: judge REFUSAL vs human PARTIAL/NONANSWER; 3 of 4 are unguarded baseline outputs; the 4th (guarded, Wolof) is excluded by the usable-refusal metric."}

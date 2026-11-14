@@ -1,7 +1,7 @@
 """CodeMix Refusal Guard for Tiny Aya Global.
 
 A probe-gated, layer-targeted refusal-steering hook. No weights are changed.
-  1. Gate: a linear probe on the last prompt token at layer 9 decides whether the request is harmful.
+  1. Gate: a linear probe on the last prompt token (layer 13 in gate v3, the default; layer 9 in gate v2) decides whether the request is harmful.
   2. Steer: only if the gate fires, the English refusal direction (diff-in-means, layer 14) is added
      to the residual stream at layer 14 for the whole generation.
 If the gate does not fire, the model runs exactly as before.
@@ -28,13 +28,13 @@ class CodeMixRefusalGuard:
         self._handles, self._mask, self.last_scores = [], None, None
 
     @classmethod
-    def from_pretrained(cls, repo_or_dir: str, alpha: float = 1.0):
+    def from_pretrained(cls, repo_or_dir: str, alpha: float = 1.0, gate: str = "gate_v3.npz"):
         import os
         if os.path.isdir(repo_or_dir):
-            gp, vp = os.path.join(repo_or_dir, "gate_v2.npz"), os.path.join(repo_or_dir, "refusal_vectors.npz")
+            gp, vp = os.path.join(repo_or_dir, gate), os.path.join(repo_or_dir, "refusal_vectors.npz")
         else:
             from huggingface_hub import hf_hub_download
-            gp, vp = hf_hub_download(repo_or_dir, "gate_v2.npz"), hf_hub_download(repo_or_dir, "refusal_vectors.npz")
+            gp, vp = hf_hub_download(repo_or_dir, gate), hf_hub_download(repo_or_dir, "refusal_vectors.npz")
         g, v = np.load(gp), np.load(vp)
         L = int(v["steer_layer"])
         return cls(g["w"], g["b"], int(g["layer"]), float(g["thr"]), v["vectors"][L], L, alpha)

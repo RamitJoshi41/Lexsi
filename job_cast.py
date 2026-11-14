@@ -18,7 +18,9 @@ dl = lambda p: hf_hub_download(REPO, p, repo_type="dataset")
 df = pd.read_json(dl("codemix_v1.jsonl"), lines=True); fit = set(json.load(open(dl("fit_ids.json"))))
 cal = df[df.id.isin(fit) & ((df.script == "en") if CALIB == "en" else True)]
 harmful, harmless = cal[cal.label == 1].text.tolist(), cal[cal.label == 0].text.tolist()
-ev = df[~df.id.isin(fit)].reset_index(drop=True)
+ev = df[~df.id.isin(fit)].reset_index(drop=True); SUF = ""
+if os.environ.get("DATA_FILE"):
+    ev = pd.read_json(dl(os.environ["DATA_FILE"]), lines=True).reset_index(drop=True); SUF = "_" + os.environ["DATA_FILE"].replace(".jsonl", "")
 
 tok = AutoTokenizer.from_pretrained(MODEL_ID); tok.padding_side = "left"
 if tok.pad_token is None: tok.pad_token = tok.eos_token
@@ -40,7 +42,7 @@ with torch.no_grad():
             resp[i] = tok.decode(gen[j, enc["input_ids"].shape[1]:], skip_special_tokens=True)
 name = f"safetune_cast_{CALIB}_a{ALPHA:g}"
 out = ev.copy(); out["response"] = resp; out["config"] = name
-path = f"runs/steer/{TAG}/gen_{name}.jsonl"; os.makedirs(os.path.dirname("out/" + path), exist_ok=True)
+path = f"runs/steer/{TAG}/gen_{name}{SUF}.jsonl"; os.makedirs(os.path.dirname("out/" + path), exist_ok=True)
 out.to_json("out/" + path, orient="records", lines=True, force_ascii=False)
 HfApi().upload_file(path_or_fileobj="out/" + path, path_in_repo=path, repo_id=REPO, repo_type="dataset")
 log("DONE", path)

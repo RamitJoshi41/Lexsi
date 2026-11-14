@@ -4,7 +4,7 @@
 # ///
 """Job 08: capability check with AuditKIT — MMLU subset, base model vs base+guard (gate v2 + steering @L14, a=1).
 Generation is wrapped as an AuditKIT CallableModel; scored with AuditKIT's evaluate() + compare()."""
-import sys, json, re, time
+import sys, json, re, time, os
 import numpy as np, pandas as pd, torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from huggingface_hub import HfApi, hf_hub_download
@@ -26,7 +26,7 @@ df = pd.read_json(dl("codemix_v1.jsonl"), lines=True); fit = set(json.load(open(
 H = np.load(dl(f"runs/baseline/{TAG}/hidden_{TAG}.npy")).astype(np.float32)
 y = df.label.values; m = df.id.isin(fit).values & (df.script == "en").values
 v = H[m & (y == 1), ADD_L].mean(0) - H[m & (y == 0), ADD_L].mean(0)
-g = np.load(dl("gate_v2.npz")); GL, GT = int(g["layer"]), float(g["thr"])
+GATE_FILE = os.environ.get("GATE_FILE", "gate_v2.npz"); g = np.load(dl(GATE_FILE)); GL, GT = int(g["layer"]), float(g["thr"])
 
 tok = AutoTokenizer.from_pretrained(MODEL_ID); tok.padding_side = "left"
 if tok.pad_token is None: tok.pad_token = tok.eos_token
@@ -73,5 +73,5 @@ summary = {"n": N, "base": res["base"].headline, "guarded": res["guarded"].headl
            "gate_fired": int(sum(st["fired"])), "comparison": str(cmp)[:3000]}
 print(json.dumps(summary, indent=1, default=str), flush=True)
 json.dump(summary, open("capability.json", "w"), indent=1, default=str)
-HfApi().upload_file(path_or_fileobj="capability.json", path_in_repo=f"runs/capability_{TAG}.json", repo_id=REPO, repo_type="dataset")
+HfApi().upload_file(path_or_fileobj="capability.json", path_in_repo=f"runs/capability_{TAG}_{GATE_FILE.replace('.npz', '')}.json", repo_id=REPO, repo_type="dataset")
 log("DONE")

@@ -45,6 +45,11 @@ for k, m in {"all": np.ones(len(df), bool), "rom": df.script.isin(["hi_rom", "pa
 log("probe + vectors ready", {l: round(float(np.linalg.norm(V[l])), 1) for l in (8, 14, 18, 23)})
 
 ev = df[~isfit].reset_index(drop=True)
+if os.environ.get("DATA_FILE"):   # evaluate on another prompt file (e.g. new-category test half) instead of codemix held-out
+    ev = pd.read_json(dl(os.environ["DATA_FILE"]), lines=True).reset_index(drop=True)
+    TAG_SUFFIX = "_" + os.environ["DATA_FILE"].split("/")[-1].replace(".jsonl", "")
+else:
+    TAG_SUFFIX = ""
 tok = AutoTokenizer.from_pretrained(MODEL_ID); tok.padding_side = "left"
 if tok.pad_token is None: tok.pad_token = tok.eos_token
 model = AutoModelForCausalLM.from_pretrained(MODEL_ID, dtype=torch.bfloat16, device_map="cuda").eval()
@@ -83,7 +88,7 @@ for cfg in CONFIGS.split(";"):
             resp[i] = tok.decode(gen[j, enc["input_ids"].shape[1]:], skip_special_tokens=True); gate_p[i] = float(state["p"][j])
     for h in hs: h.remove()
     out = ev.copy(); out["response"] = resp; out["gate_p"] = gate_p; out["config"] = name
-    path = f"runs/steer/{TAG}/gen_{name}.jsonl"
+    path = f"runs/steer/{TAG}/gen_{name}{TAG_SUFFIX}.jsonl"
     os.makedirs(os.path.dirname("out/" + path), exist_ok=True)
     out.to_json("out/" + path, orient="records", lines=True, force_ascii=False)
     api.upload_file(path_or_fileobj="out/" + path, path_in_repo=path, repo_id=REPO, repo_type="dataset")

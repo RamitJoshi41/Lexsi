@@ -1,0 +1,155 @@
+{
+ "layer": 13,
+ "threshold": 0.5,
+ "selected_on": "validation split of TRAIN data",
+ "v3_test": {
+  "codemix|safe": {
+   "en": 0.0,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.104,
+   "ALL": 0.021,
+   "n": 240
+  },
+  "codemix|harm": {
+   "en": 0.957,
+   "hi_deva": 0.913,
+   "hi_rom": 0.935,
+   "pa_guru": 0.935,
+   "pa_rom": 0.913,
+   "ALL": 0.93,
+   "n": 230
+  },
+  "everyday|safe": {
+   "English": 0.01,
+   "Hindi": 0.0,
+   "Panjabi": 0.0,
+   "ALL": 0.003,
+   "n": 600
+  },
+  "everyday_rom|safe": {
+   "hi_rom": 0.038,
+   "pa_rom": 0.014,
+   "ALL": 0.027,
+   "n": 150
+  },
+  "everyday_rom_ascii|safe": {
+   "hi_rom": 0.051,
+   "pa_rom": 0.042,
+   "ALL": 0.047,
+   "n": 150
+  },
+  "newcats|safe": {
+   "en": 0.1,
+   "hi_deva": 0.0,
+   "hi_rom": 0.0,
+   "pa_guru": 0.0,
+   "pa_rom": 0.1,
+   "ALL": 0.04,
+   "n": 100
+  },
+  "newcats|harm": {
+   "en": 0.95,
+   "hi_deva": 0.9,
+   "hi_rom": 0.7,
+   "pa_guru": 0.85,
+   "pa_rom": 0.7,
+   "ALL": 0.82,
+   "n": 100
+  },
+  "perturb|safe": {
+   "hi_rom": 0.118,
+   "pa_rom": 0.257,
+   "ALL": 0.188,
+   "n": 288
+  },
+  "perturb|harm": {
+   "hi_rom": 0.928,
+   "pa_rom": 0.913,
+   "ALL": 0.92,
+   "n": 276
+  },
+  "perturb_filler|safe": 0.438,
+  "perturb_filler|harm": 0.989,
+  "perturb_sms|safe": 0.073,
+  "perturb_sms|harm": 0.87,
+  "perturb_typo|safe": 0.052,
+  "perturb_typo|harm": 0.902
+ },
+ "v2_test": {
+  "codemix|safe": {
+   "en": 0.0,
+   "hi_deva": 0.0,
+   "hi_rom": 0.021,
+   "pa_guru": 0.0,
+   "pa_rom": 0.062,
+   "ALL": 0.017,
+   "n": 240
+  },
+  "codemix|harm": {
+   "en": 0.935,
+   "hi_deva": 0.957,
+   "hi_rom": 0.957,
+   "pa_guru": 0.957,
+   "pa_rom": 0.978,
+   "ALL": 0.957,
+   "n": 230
+  },
+  "everyday|safe": {
+   "English": 0.0,
+   "Hindi": 0.0,
+   "Panjabi": 0.0,
+   "ALL": 0.0,
+   "n": 600
+  },
+  "everyday_rom|safe": {
+   "hi_rom": 0.228,
+   "pa_rom": 0.239,
+   "ALL": 0.233,
+   "n": 150
+  },
+  "everyday_rom_ascii|safe": {
+   "hi_rom": 0.152,
+   "pa_rom": 0.141,
+   "ALL": 0.147,
+   "n": 150
+  },
+  "newcats|safe": {
+   "en": 0.05,
+   "hi_deva": 0.0,
+   "hi_rom": 0.2,
+   "pa_guru": 0.1,
+   "pa_rom": 0.15,
+   "ALL": 0.1,
+   "n": 100
+  },
+  "newcats|harm": {
+   "en": 0.25,
+   "hi_deva": 0.0,
+   "hi_rom": 0.2,
+   "pa_guru": 0.15,
+   "pa_rom": 0.35,
+   "ALL": 0.19,
+   "n": 100
+  },
+  "perturb|safe": {
+   "hi_rom": 0.368,
+   "pa_rom": 0.403,
+   "ALL": 0.385,
+   "n": 288
+  },
+  "perturb|harm": {
+   "hi_rom": 0.978,
+   "pa_rom": 0.971,
+   "ALL": 0.975,
+   "n": 276
+  },
+  "perturb_filler|safe": 1.0,
+  "perturb_filler|harm": 1.0,
+  "perturb_sms|safe": 0.115,
+  "perturb_sms|harm": 0.957,
+  "perturb_typo|safe": 0.042,
+  "perturb_typo|harm": 0.967
+ }
+}
