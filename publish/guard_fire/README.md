@@ -38,7 +38,7 @@ guard = guard_mod.CodeMixRefusalGuard.from_pretrained("sunit12/tiny-aya-fire-cod
 ```
 
 Files: `gate_v3.npz` (Fire gate), `refusal_vectors.npz` (Fire diff-in-means vectors, all 36 layers), `guard.py`.
-Code, data and logs: https://github.com/SunitSinghDhaliwal/knows-but-doesnt-refuse ·
+Code, data and logs: https://github.com/SunitSinghDhaliwal/lost-in-transliteration ·
 `sunit12/codemix-safety-bench` · `sunit12/codemix-safety-logs`.
 
 ## Limitations

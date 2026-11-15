@@ -13,7 +13,7 @@
 
 **Environment.** Python 3.12, `uv` (every script declares its dependencies inline, PEP 723). GPU work: one NVIDIA A10G (24 GB) per job via `hf jobs uv run` (bf16 needs ~8 GB, nf4 ~4 GB). CPU analyses run on a laptop or an HF CPU job. Main packages: `torch`, `transformers>=4.56`, `scikit-learn`, `safetune==0.1.18`, `auditkit==1.1.12`, `curatorkit==0.1.27`, `bitsandbytes` (4-bit), `fasttext` (LID-218), `datasketch` + `sentence-transformers` (leak check).
 
-**Repo layout** (https://github.com/SunitSinghDhaliwal/knows-but-doesnt-refuse):
+**Repo layout** (https://github.com/SunitSinghDhaliwal/lost-in-transliteration):
 
 | Path | What it does |
 |---|---|

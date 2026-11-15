@@ -5,7 +5,7 @@ Everything below is tagged `v1.0-submission` and can be submitted as-is.
 
 | Artifact | Where | Tag |
 |---|---|---|
-| Code | GitHub `SunitSinghDhaliwal/knows-but-doesnt-refuse` @ 3bbd659 | `v1.0-submission` |
+| Code | GitHub `SunitSinghDhaliwal/lost-in-transliteration` @ 3bbd659 | `v1.0-submission` |
 | Guard (Global) | HF model `sunit12/tiny-aya-global-codemix-refusal-guard` | `v1.0-submission` |
 | Guard (Fire) | HF model `sunit12/tiny-aya-fire-codemix-refusal-guard` | `v1.0-submission` |
 | Benchmark | HF dataset `sunit12/codemix-safety-bench` | `v1.0-submission` |

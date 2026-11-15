@@ -632,7 +632,7 @@ Three items from our v3 plan are now done or started: **more languages** (zero-s
 - **(v4) LoRA:** `sunit12/tiny-aya-global-codemix-refusal-lora` — the final circuit-guided adapter (layers 10–20) with model card and GGUF adapter `codemix-refusal-lora-f16.gguf`; ablation adapters `…-lora-v0`, `…-lora-v1`, `…-lora-v2` (all layers). Distillation data: `sunit12/codemix-refusal-distill-v2` (and `-v2base`, the v1 set `sunit12/codemix-refusal-distill`).
 - **(v4) Circuits and causal logs:** `runs/circuit/` (CircuitKIT node scores per language, Jaccard summary, head-intervention generations) and `runs/causal/` (patching and ablation generations + judge labels) in the logs repo.
 - **Data collection:** https://huggingface.co/collections/sunit12/knows-but-doesnt-refuse-data-and-logs-6af82fe439fca752611786f2 — `sunit12/codemix-safety-bench` (benchmark + India-specific pairs + CuratorKIT provenance) and `sunit12/codemix-safety-logs` (every generation, judge label, LID label, hidden-state file, result table, figure and job script).
-- **Code:** https://github.com/SunitSinghDhaliwal/knows-but-doesnt-refuse — every job script (`job_*.py`), analysis (`analyze.py`, `compare_final.py`, `gate_v3.py`, `response_lid.py`) and the AuditKIT `MultilingualRefusalDetector`; all run with `hf jobs uv run` or `uv run`.
+- **Code:** https://github.com/SunitSinghDhaliwal/lost-in-transliteration — every job script (`job_*.py`), analysis (`analyze.py`, `compare_final.py`, `gate_v3.py`, `response_lid.py`) and the AuditKIT `MultilingualRefusalDetector`; all run with `hf jobs uv run` or `uv run`.
 
 - **Demo / Space:** explorer of every held-out output (plain vs guard vs CAST, with judge, language and gate scores; filters for fixed / guard-failed / CAST-loop / over-refusal): https://sunit12-knows-but-doesnt-refuse-explorer.static.hf.space
 - **Slides:** 11-slide demo deck with before/after examples; 2-minute demo script in `docs/demo_script_2min.md`.
@@ -642,7 +642,7 @@ Three items from our v3 plan are now done or started: **more languages** (zero-s
 
 **Environment.** Python 3.12, `uv` (every script declares its dependencies inline, PEP 723). GPU work: one NVIDIA A10G (24 GB) per job via `hf jobs uv run` (bf16 needs ~8 GB, nf4 ~4 GB). CPU analyses run on a laptop or an HF CPU job. Main packages: `torch`, `transformers>=4.56`, `scikit-learn`, `safetune==0.1.18`, `auditkit==1.1.12`, `curatorkit==0.1.27`, `bitsandbytes` (4-bit), `fasttext` (LID-218), `datasketch` + `sentence-transformers` (leak check).
 
-**Repo layout** (https://github.com/SunitSinghDhaliwal/knows-but-doesnt-refuse):
+**Repo layout** (https://github.com/SunitSinghDhaliwal/lost-in-transliteration):
 
 | Path | What it does |
 |---|---|
@@ -691,11 +691,11 @@ guard.detach()
 
 ## 16. Team
 
-**Team of two:** Sunit Singh Dhaliwal ([@sunit12](https://huggingface.co/sunit12)) and Ramit [SURNAME, @HF-HANDLE].
+**Team of two:** Sunit Singh Dhaliwal ([@sunit12](https://huggingface.co/sunit12)) and Ramit Joshi.
 
 **Author contributions:**
 - **Sunit Singh Dhaliwal** — project lead: research question and experiment design; benchmark construction and native-speaker review of the Hindi/Punjabi translations; human labels for judge validation; the knows-vs-acts, language-ID and causal analyses; both fixes (probe-gated steer and circuit-guided LoRA); compute runs (HF Jobs, Kaggle); write-up.
-- **Ramit [SURNAME]** — [TO FILL: Ramit's contributions].
+- **Ramit Joshi** — related-work survey and positioning against prior multilingual-safety work; discussion of experiment design and review of results and failure cases; testing of the released guard, LoRA and demo; figures, slides and submission preparation.
 
 **Acknowledgements:** Lexsi Labs and Cohere Labs for the hackathon, kits and models; Hugging Face Jobs for compute.
 
