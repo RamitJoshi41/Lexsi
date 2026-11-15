@@ -1,0 +1,11 @@
+{
+ "n": 400,
+ "base": {
+  "mcq_acc": 0.505
+ },
+ "guarded": {
+  "mcq_acc": 0.305
+ },
+ "gate_fired": 0,
+ "comparison": "<auditkit.comparison.RunComparison object at 0x7fc2c43ab470>"
+}
