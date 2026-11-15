@@ -691,7 +691,7 @@ guard.detach()
 
 ## 16. Team
 
-**Team of two:** Sunit Singh Dhaliwal ([@sunit12](https://huggingface.co/sunit12)) and Ramit Joshi.
+**Team LASTROUNDCLUTCH** (two members): Sunit Singh Dhaliwal ([@sunit12](https://huggingface.co/sunit12)) and Ramit Joshi.
 
 **Author contributions:**
 - **Sunit Singh Dhaliwal** (project lead) — conceived the central question (does Tiny Aya *know* a romanized Hindi/Punjabi request is harmful even when it does not refuse?) and designed the study end to end. Built the 4-script code-mixed safety benchmark and personally reviewed the Hindi and Punjabi translations as a native speaker; produced the blind human labels used to validate the LLM judge. Ran the mechanistic analysis: knows-vs-acts probing, language-ID diagnostics, causal patching and directional ablation, and EAP-IG circuit discovery with CircuitKIT. Designed and shipped both fixes: the probe-gated activation steer and the circuit-guided LoRA (layers 10–20, which lifts held-out non-English refusal from 38% to 90% with MMLU unchanged). Orchestrated ~120 GPU jobs across HF Jobs and Kaggle on a ~$18 budget, and wrote the paper.
