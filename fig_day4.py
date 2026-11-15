@@ -34,7 +34,7 @@ c = J("results/causal2.json"); ab = J("results/ablate_all.json") if os.path.exis
 L = [10, 13, 14, 18]; g = c["non-EN harmful"]; base = g["none"]["-1"]["refusal"]
 fig, ax = plt.subplots(1, 2, figsize=(10.2, 3.9), gridspec_kw={"width_ratios": [1.6, 1]})
 a = ax[0]; a.axhspan(base[1], base[2], color=GRAY, alpha=0.25, lw=0); a.axhline(base[0], color=GRAY, lw=1)
-a.text(10.1, base[0] - 0.045, f"no intervention {base[0]:.0%}", fontsize=8.5, color=INK2)
+a.text(9.7, 0.325, f"grey band: no intervention, {base[0]:.0%} [{base[1]:.0%}, {base[2]:.0%}]", fontsize=8.5, color=INK2)
 for k, lab, col, ls in [("refusal_twin", "+ refusal component (twin-sized)", BLUE, "-"), ("harm_twin", "+ harm component (twin-sized)", ORANGE, "-"),
                         ("harm_matched", "+ harm direction, refusal-sized", ORANGE, "--"), ("random_matched", "+ random direction, refusal-sized", AQUA, ":")]:
     y = [g[k][str(l)]["refusal"] for l in L]
@@ -50,17 +50,18 @@ if ab:
         v = [ab[grp][k]["refusal"] for k, _ in conds]
         bars = a.bar(x + off, [t[0] for t in v], w * 0.95, color=col, label=lab)
         for r, t in zip(bars, v): a.text(r.get_x() + r.get_width() / 2, t[0] + 0.01, f"{t[0]:.0%}", ha="center", fontsize=8, color=INK)
-    a.set_xticks(x); a.set_xticklabels([n for _, n in conds], fontsize=8.5); a.set_ylim(0, 1.05); a.grid(axis="x", visible=False)
-    a.yaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0)); a.legend(fontsize=8, frameon=False, loc="upper right")
+    a.set_xticks(x); a.set_xticklabels([n for _, n in conds], fontsize=8.5); a.set_ylim(0, 1.22); a.grid(axis="x", visible=False)
+    a.set_yticks([0, .2, .4, .6, .8, 1.0]); a.yaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0)); a.legend(fontsize=8, frameon=False, loc="upper center", ncol=2)
     a.set_title("Necessity: direction removed at every layer", fontsize=10, loc="left", color=INK)
 plt.tight_layout(); plt.savefig("results/fig_causal2.png", dpi=170); plt.close()
 
 # ---- 3. robustness
-u = J("results/unseen_langs.json"); at = J("results/attacks.json")
+u = J("results/unseen_lora.json") if os.path.exists("results/unseen_lora.json") else J("results/unseen_langs.json")
+at = J("results/attacks_lora.json") if os.path.exists("results/attacks_lora.json") else J("results/attacks.json")
+KEEP = ["control", "guard_v3", "lora_v2c"]
 def panel(a, res, groups, gl, title):
-    sysl = [k for k in ["control", "guard_v3", "lora"] if k in res] + [k for k in res if k.startswith("lora") and k != "lora"]
-    sysl = list(dict.fromkeys(sysl)); x = np.arange(len(groups)); w = 0.8 / len(sysl)
-    cols = {"control": GRAY, "guard_v3": BLUE}; lab = {"control": "base model", "guard_v3": "hook guard (v1.0)"}
+    sysl = [k for k in KEEP if k in res]; x = np.arange(len(groups)); w = 0.8 / len(sysl)
+    cols = {"control": GRAY, "guard_v3": BLUE, "lora_v2c": ORANGE}; lab = {"control": "plain Tiny Aya", "guard_v3": "fix 1: gated steer", "lora_v2c": "fix 2: circuit-guided LoRA"}
     for i, k in enumerate(sysl):
         v = [res[k]["by_group"][gg]["usable"] for gg in groups]
         a.bar(x - 0.4 + w * (i + 0.5), v, w * 0.92, color=cols.get(k, AQUA), label=lab.get(k, k.replace("_", " ")))
@@ -71,4 +72,21 @@ panel(ax[0], u, ["bn_rom", "mr_rom", "ta_rom", "ur_rom"], ["Bengali", "Marathi",
 panel(ax[1], at, ["scriptmix", "roleplay", "translate", "prefix", "fiction"], ["script-mix", "role-play", "translate", "prefix", "fiction"], "Jailbreak wrappers (Hinglish)")
 ax[0].set_ylabel("usable refusal, harmful prompts"); ax[1].legend(fontsize=8, frameon=False, loc="upper right")
 plt.tight_layout(); plt.savefig("results/fig_robustness.png", dpi=170); plt.close()
-print("saved fig_circuits, fig_causal2, fig_robustness")
+# ---- 4. v4 headline: plain vs guard vs LoRA on the metrics that matter
+h = J("results/heldout_lora.json"); NONEN = ["hi_deva", "hi_rom", "pa_guru", "pa_rom"]
+nonen = lambda k: np.mean([h[k]["by_group"][g]["usable"] for g in NONEN])
+harmless = lambda k: np.mean([h[k]["by_group"][g]["refused_harmless"] for g in NONEN])
+mm = {"control": 0.505, "guard_v3": 0.505}
+for k, f in [("lora_v2c", "runs/capability_tiny-aya-global_tiny-aya-global-codemix-refusal-lora-v2-circuit.json")]:
+    if os.path.exists(f): mm[k] = J(f)["guarded"]["mcq_acc"]
+metrics = [("usable refusal,\nheld-out non-English", lambda k: nonen(k)), ("usable refusal,\n4 unseen languages", lambda k: u[k]["usable_all"]),
+           ("harmless prompts\nrefused (non-English)", lambda k: harmless(k)), ("MMLU\n(capability)", lambda k: mm.get(k, np.nan))]
+fig, ax = plt.subplots(figsize=(10.2, 3.9)); x = np.arange(len(metrics)); w = 0.26
+for i, (k, col, lab) in enumerate([("control", GRAY, "plain Tiny Aya Global"), ("guard_v3", BLUE, "fix 1: gated steer (no training)"), ("lora_v2c", ORANGE, "fix 2: circuit-guided LoRA (no hooks)")]):
+    v = [f(k) for _, f in metrics]; bars = ax.bar(x + (i - 1) * w, v, w * 0.92, color=col, label=lab)
+    for r, t in zip(bars, v): ax.text(r.get_x() + r.get_width() / 2, t + 0.012, f"{t:.0%}", ha="center", fontsize=8.5, color=INK)
+ax.set_xticks(x); ax.set_xticklabels([m for m, _ in metrics], fontsize=9); ax.set_ylim(0, 1.08); ax.grid(axis="x", visible=False)
+ax.yaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0)); ax.legend(fontsize=8.5, frameon=False, loc="upper right", ncol=1)
+ax.set_title("Knows, But Doesn't Refuse — Tiny Aya Global on romanized / code-mixed Hindi & Punjabi (held-out)", fontsize=10.5, loc="left", color=INK)
+plt.tight_layout(); plt.savefig("results/fig_headline_v4.png", dpi=170); plt.close()
+print("saved fig_circuits, fig_causal2, fig_robustness, fig_headline_v4")
