@@ -13,7 +13,7 @@ A 37 MB LoRA for [`CohereLabs/tiny-aya-global`](https://huggingface.co/CohereLab
 harmful requests written in **romanized / code-mixed Hindi and Punjabi** (and, zero-shot, romanized Bengali, Tamil,
 Marathi and Urdu) — **without runtime hooks, without a system prompt, and with MMLU unchanged**.
 
-It is the hook-based guard from *Knows, But Doesn't Refuse* (probe-gated refusal steering at layer 14,
+It is the hook-based guard from *Lost in Transliteration* (probe-gated refusal steering at layer 14,
 [`sunit12/tiny-aya-global-codemix-refusal-guard`](https://huggingface.co/sunit12/tiny-aya-global-codemix-refusal-guard))
 distilled into the weights with **AlignTune** (TRL SFT backend), with LoRA restricted to **layers 10–20** — the region our
 causal patching and **CircuitKIT** circuit analysis located as where the refusal decision fails for code-mixed input.
@@ -68,4 +68,4 @@ model = PeftModel.from_pretrained(model, "sunit12/tiny-aya-global-codemix-refusa
 - The translations of the unseen-language test set were machine-written (Claude) and not native-reviewed.
 - Inherits the Tiny Aya license (CC-BY-NC 4.0).
 
-Part of *Knows, But Doesn't Refuse* (Lexsi Labs hackathon, tracks 2a + 2b).
+Part of *Lost in Transliteration* (Lexsi Labs hackathon, tracks 2a + 2b).

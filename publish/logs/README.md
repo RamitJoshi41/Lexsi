@@ -13,7 +13,7 @@ pretty_name: CodeMix Safety — full experiment logs (Tiny Aya Global / Fire)
 
 # CodeMix Safety — full experiment logs
 
-Everything behind the article **"Knows, But Doesn't Refuse: Where Tiny Aya's Safety Breaks in Romanized Hindi & Punjabi"** — every generation, every judge label, hidden states, result tables, figures and the exact job scripts.
+Everything behind the article **"Lost in Transliteration"** — every generation, every judge label, hidden states, result tables, figures and the exact job scripts.
 
 > ⚠️ Contains model responses to harmful requests (hate, violence, self-harm, harassment), including cases where the model complied. Provided for safety research only.
 

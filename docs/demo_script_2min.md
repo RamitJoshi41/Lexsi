@@ -1,4 +1,4 @@
-# 2-minute demo script — "Knows, But Doesn't Refuse"
+# 2-minute demo script — "Lost in Transliteration"
 
 Setup on screen: deck (claude.ai artifact) in one tab, explorer Space in another
 (https://sunit12-knows-but-doesnt-refuse-explorer.static.hf.space, filter **Show = "plain complied → guard usable refusal"**).

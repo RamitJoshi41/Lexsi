@@ -9,7 +9,7 @@ language: [en, hi, pa]
 
 The [Tiny Aya Global guard](https://huggingface.co/sunit12/tiny-aya-global-codemix-refusal-guard) re-fit for
 **`CohereLabs/tiny-aya-fire`** with the identical recipe — a transfer test of the method from
-*Knows, But Doesn't Refuse*. No weights change: a logistic probe on the last prompt token at **layer 13**
+*Lost in Transliteration*. No weights change: a logistic probe on the last prompt token at **layer 13**
 (threshold 0.6, chosen on a validation split of training data) gates the addition of the English diff-in-means
 refusal vector at **layer 14** (α = 1).
 

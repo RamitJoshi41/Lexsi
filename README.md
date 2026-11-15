@@ -1,4 +1,6 @@
-# Knows, But Doesn't Refuse
+# Lost in Transliteration
+
+*Tiny Aya knows romanized Hindi and Punjabi requests are harmful, but doesn't refuse them. Where it breaks, and two fixes.*
 
 > This README is the project write-up (the same text is in [`docs/hf-article-v4.md`](docs/hf-article-v4.md) in Hugging Face article format).
 

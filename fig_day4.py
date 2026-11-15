@@ -87,6 +87,6 @@ for i, (k, col, lab) in enumerate([("control", GRAY, "plain Tiny Aya Global"), (
     for r, t in zip(bars, v): ax.text(r.get_x() + r.get_width() / 2, t + 0.012, f"{t:.0%}", ha="center", fontsize=8.5, color=INK)
 ax.set_xticks(x); ax.set_xticklabels([m for m, _ in metrics], fontsize=9); ax.set_ylim(0, 1.08); ax.grid(axis="x", visible=False)
 ax.yaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0)); ax.legend(fontsize=8.5, frameon=False, loc="upper right", ncol=1)
-ax.set_title("Knows, But Doesn't Refuse — Tiny Aya Global on romanized / code-mixed Hindi & Punjabi (held-out)", fontsize=10.5, loc="left", color=INK)
+ax.set_title("Lost in Transliteration — Tiny Aya Global on romanized / code-mixed Hindi & Punjabi (held-out)", fontsize=10.5, loc="left", color=INK)
 plt.tight_layout(); plt.savefig("results/fig_headline_v4.png", dpi=170); plt.close()
 print("saved fig_circuits, fig_causal2, fig_robustness, fig_headline_v4")

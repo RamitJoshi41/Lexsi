@@ -1,5 +1,5 @@
 ---
-title: Knows But Doesn't Refuse – live demo
+title: Lost in Transliteration – live demo
 emoji: 🛡️
 colorFrom: red
 colorTo: gray
@@ -24,4 +24,4 @@ docker run -p 7860:7860 knows-but-doesnt-refuse   # then open http://localhost:7
 ```
 Or without Docker: `llama-server -m tiny-aya-global-q4_k_m.gguf --lora codemix-refusal-lora-f16.gguf --lora-init-without-apply --path public --port 7860`.
 
-Part of *Knows, But Doesn't Refuse* (Lexsi Labs hackathon). Model license: Tiny Aya (CC-BY-NC 4.0).
+Part of *Lost in Transliteration* (Lexsi Labs hackathon). Model license: Tiny Aya (CC-BY-NC 4.0).

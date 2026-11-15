@@ -1,11 +1,13 @@
 ---
-title: "Knows, But Doesn't Refuse: Where — Causally and at Circuit Level — Tiny Aya's Safety Breaks in Romanized Hindi & Punjabi, and Two Fixes: a Gated Steer and a Circuit-Guided LoRA"
+title: "Lost in Transliteration: Tiny Aya Knows Romanized Hindi & Punjabi Requests Are Harmful but Doesn't Refuse — Where It Breaks (Causally, at Circuit Level) and Two Fixes"
 thumbnail: https://huggingface.co/datasets/sunit12/codemix-safety-logs/resolve/main/results/fig_headline_v4.png
 authors:
 - user: sunit12
 ---
 
-# Knows, But Doesn't Refuse
+# Lost in Transliteration
+
+*Tiny Aya knows romanized Hindi and Punjabi requests are harmful, but doesn't refuse them. Where it breaks, and two fixes.*
 
 **One-line claim:** Tiny Aya *recognises* harmful requests typed in romanized Hindi and Punjabi but does not refuse them: the harm signal is there, the refusal component is missing — and adding back exactly the refusal component the English twin has (and nothing else) restores refusal. Repairing it where it breaks works twice: a 9 KB probe-gated steer doubles usable refusals (38% → 76%) with no training, and a 37 MB LoRA trained only on the located layers (10–20) reaches **90%** with no hooks, MMLU unchanged, and transfers to four languages it never saw.
 
