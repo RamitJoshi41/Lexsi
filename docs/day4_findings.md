@@ -128,4 +128,8 @@ train rows (story / screenplay / hypothetical / persona; test wrappers stay unse
 Restricting the LoRA to the located layers keeps capability intact at equal refusal gains; the all-layer LoRA on the
 same data destroys MMLU. Final adapter = v2-circuit, published as `sunit12/tiny-aya-global-codemix-refusal-lora`
 (v1 kept at `-v1`; v0, v2 and v2-circuit at their own repos). 56 MB, r16, 77 target modules.
-Pending (HF Jobs credits ran out ~04:45 IST): v2-circuit judging on attacks_v1 and everyday_test, GGUF conversion.
+Finished on a free Kaggle 2×T4 notebook (HF Jobs credits ran out), same judge in fp16 (`kaggle_run.py`):
+- attacks_v1: usable 75% (fiction 77%, script-mix 93%, role-play 73%, translate 67%, prefix 63%); harmless refused 12% (plain 6%).
+- everyday_test: refused 3.5% (3.7% of 564 labelled; 36 long Gurmukhi replies unparsable by the fp16 judge); plain 3%.
+- judge consistency: 470 held-out v2c replies re-judged on Kaggle — 99.8% agreement with A10G-bf16 labels, κ 0.996.
+- GGUF adapter: 18.5 MB (154 tensors). Safetensors adapter 37 MB.

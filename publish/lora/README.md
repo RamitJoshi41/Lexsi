@@ -9,7 +9,7 @@ datasets: [sunit12/codemix-refusal-distill-v2, sunit12/codemix-safety-bench]
 
 # Tiny Aya Global — code-mixed refusal LoRA (circuit-guided, v2)
 
-A 56 MB LoRA for [`CohereLabs/tiny-aya-global`](https://huggingface.co/CohereLabs/tiny-aya-global) that makes the model refuse
+A 37 MB LoRA for [`CohereLabs/tiny-aya-global`](https://huggingface.co/CohereLabs/tiny-aya-global) that makes the model refuse
 harmful requests written in **romanized / code-mixed Hindi and Punjabi** (and, zero-shot, romanized Bengali, Tamil,
 Marathi and Urdu) — **without runtime hooks, without a system prompt, and with MMLU unchanged**.
 
@@ -27,6 +27,8 @@ causal patching and **CircuitKIT** circuit analysis located as where the refusal
 | harmless held-out refused (all scripts) | 13% | 15% | 19% (Δ +5 [+1, +10]) |
 | unseen languages (romanized bn / mr / ta / ur), usable | 15% | 57% | **78%** |
 | chatty filler wrappers: usable / harmless refused | 23% / 10% | 70% / 28% | **86% / 19%** |
+| jailbreak wrappers (romanized Hindi), usable — fiction framing | 35% — 30% | 70% — 30% | **75% — 77%** |
+| everyday prompts refused (600, EN / HI / PA native) | 3% | 3% | 3.5% |
 | MMLU, 400 q (AuditKIT) | 50.5% | 50.5% | **50.5%** |
 
 95% CIs are cluster-bootstrap over prompt ids; full tables and logs in
@@ -35,6 +37,12 @@ Same-data LoRA on **all** layers reached the same refusal rates but collapsed MM
 rows (v1) MMLU fell to 30.5% because the model stopped ending its turn after a one-letter answer.
 
 ## Use
+
+**llama.cpp / LM Studio / Ollama (CPU):** download `codemix-refusal-lora-f16.gguf` from this repo and the official
+[`CohereLabs/tiny-aya-global-GGUF`](https://huggingface.co/CohereLabs/tiny-aya-global-GGUF) model, then
+`llama-cli -m tiny-aya-global-q4_k_m.gguf --lora codemix-refusal-lora-f16.gguf`.
+
+**transformers + peft:**
 
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -54,7 +62,8 @@ model = PeftModel.from_pretrained(model, "sunit12/tiny-aya-global-codemix-refusa
   q/k/v/o/gate/up/down of layers 10–20, lr 2e-4, 2 epochs, bf16, A10G.
 
 ## Limits
-- Harmless false refusals rise by ~5 points on held-out prompts (XSTest-style look-alikes); more on Bengali.
+- Harmless false refusals rise by ~4 points on held-out non-English prompts (XSTest-style look-alikes; CI −1 to +9), more on Bengali; +6 points on jailbreak-wrapped harmless prompts.
+- Weaker than the hook guard on role-play (73% vs 83%) and translate-then-answer (67% vs 77%) wrappers.
 - Many romanized-Hindi refusals reuse one of five hand-written phrasings.
 - The translations of the unseen-language test set were machine-written (Claude) and not native-reviewed.
 - Inherits the Tiny Aya license (CC-BY-NC 4.0).

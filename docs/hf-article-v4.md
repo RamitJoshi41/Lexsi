@@ -7,7 +7,7 @@ authors:
 
 # Knows, But Doesn't Refuse
 
-**One-line claim:** Tiny Aya *recognises* harmful requests typed in romanized Hindi and Punjabi but does not refuse them: the harm signal is there, the refusal component is missing — and adding back exactly the refusal component the English twin has (and nothing else) restores refusal. Repairing it where it breaks works twice: a 9 KB probe-gated steer doubles usable refusals (38% → 76%) with no training, and a 56 MB LoRA trained only on the located layers (10–20) reaches **90%** with no hooks, MMLU unchanged, and transfers to four languages it never saw.
+**One-line claim:** Tiny Aya *recognises* harmful requests typed in romanized Hindi and Punjabi but does not refuse them: the harm signal is there, the refusal component is missing — and adding back exactly the refusal component the English twin has (and nothing else) restores refusal. Repairing it where it breaks works twice: a 9 KB probe-gated steer doubles usable refusals (38% → 76%) with no training, and a 37 MB LoRA trained only on the located layers (10–20) reaches **90%** with no hooks, MMLU unchanged, and transfers to four languages it never saw.
 
 ![Headline figure](https://huggingface.co/datasets/sunit12/codemix-safety-logs/resolve/main/results/fig_headline_v4.png)
 
@@ -48,7 +48,7 @@ We release the benchmark, every generation and judge label, both fixes (the guar
 | **Claim** | Tiny Aya *knows* romanized Hindi/Punjabi requests are harmful but doesn't refuse them; the missing piece is the refusal-direction component, causally. Fixing it where it breaks works at inference time (gated steer) and in the weights (circuit-guided LoRA). |
 | **Headline** | Usable refusals on held-out non-English harmful prompts: **38% → 76%** (gated steer; gain +38, 95% CI +29 to +47) → **90%** (LoRA on layers 10–20; gain +52, CI +43 to +60; +14 over the guard, CI +5 to +22); SafeTune CAST: 40%. |
 | **Mechanism** | Twin-sized refusal component restores refusal 52% → 76%; harm / random directions of the same size: no effect. CircuitKIT: refusal-circuit overlap with English 0.60 → 0.48 → 0.21 as refusal fails (Devanagari → Hinglish → romanized Punjabi). |
-| **Doesn't break** | MMLU 50.5 → 50.5 (both fixes); everyday traffic refused 3% → 3%; guard: no latency, holds on 4-bit (39% → 76%) and Tiny Aya Fire (47% → 76%); LoRA: non-English harmless refusals 13.5% → 17.7% (+4, CI −1 to +9). |
+| **Doesn't break** | MMLU 50.5 → 50.5 (both fixes); everyday traffic refused 3% → 3% (both fixes); guard: no latency, holds on 4-bit (39% → 76%) and Tiny Aya Fire (47% → 76%); LoRA: non-English harmless refusals 13.5% → 17.7% (+4, CI −1 to +9). |
 | **Generalises** | Four romanized languages never seen in training: 15% → 57% (guard) → 78% (LoRA). Jailbreak wrappers: 35% → 70% (guard) → 75% (LoRA); fiction framing beats the guard (30%) but not the LoRA (77%). |
 | **Robustness** | Paired McNemar + cluster-bootstrap CIs; leak check (exact / MinHash / LaBSE); judge validated against a native speaker (κ 0.63). |
 | **Try it** | Explorer: https://sunit12-knows-but-doesnt-refuse-explorer.static.hf.space · guard: `sunit12/tiny-aya-global-codemix-refusal-guard` · LoRA: `sunit12/tiny-aya-global-codemix-refusal-lora` (GGUF adapter for llama.cpp / Ollama in the same repo) |
@@ -65,7 +65,7 @@ Prior work shows code-mixed prompts weaken safety guardrails (Cohere's Expeditio
 4. **Is the mechanism causal, and is it visible at circuit level?** Does giving code-mixed input exactly the missing refusal component restore refusal (and nothing else does)? Do the refusal circuits of different scripts diverge where behaviour diverges?
 5. **Can the repair live in the weights** — no hooks, any runtime (llama.cpp / Ollama) — without paying in capability? And does it hold for languages and attacks it was never trained on?
 
-The deliverables for a deployer are a **drop-in guard** (`guard.py`, a 9 KB gate + one steering vector) that wraps an unmodified Tiny Aya Global, and a **56 MB LoRA** (also as a GGUF adapter) that needs no wrapper at all.
+The deliverables for a deployer are a **drop-in guard** (`guard.py`, a 9 KB gate + one steering vector) that wraps an unmodified Tiny Aya Global, and a **37 MB LoRA** (also as a GGUF adapter) that needs no wrapper at all.
 
 ## 2. Threat model
 
@@ -526,7 +526,9 @@ Gain over plain: guard +42 pts [+32, +53], LoRA +63 [+52, +74]. Neither was fitt
 | LoRA v1 (all layers, no wrapper data) | 90% | 80% | 73% | 73% | 37% | 71% | 15% |
 | **LoRA (circuit-guided, final)** | 93% | 73% | 67% | 63% | **77%** | **75%** | 12% |
 
-The guard doubles usable refusal against black-box wrappers at no over-refusal cost, but **fiction framing gets through** (30% → 30%): a request quoted inside a story no longer looks harmful to the gate at layer 13. The final LoRA closes that hole: **fiction-framed usable refusal 30% → 77%** (its training data had story / screenplay / hypothetical wrappers in *different* wording from the test wrappers), 75% across all wrappers (+39 pts [+29, +49] over plain), at a cost of +6 pts [+1, +11] harmless refusals (12% vs 6%). (The final-LoRA rows on this set were judged on Kaggle with the same judge in fp16; see the consistency check in §10.19.)
+The guard doubles usable refusal against black-box wrappers at no over-refusal cost, but **fiction framing gets through** (30% → 30%): a request quoted inside a story no longer looks harmful to the gate at layer 13. The final LoRA closes that hole: **fiction-framed usable refusal 30% → 77%** (its training data had story / screenplay / hypothetical wrappers in *different* wording from the test wrappers), 75% across all wrappers (+39 pts [+29, +49] over plain), at a cost of +6 pts [+1, +11] harmless refusals (12% vs 6%). It is not uniformly better than the guard: weaker on role-play (73% vs 83%) and translate-then-answer (67% vs 77%), where the two fixes are complementary.
+
+![Robustness](https://huggingface.co/datasets/sunit12/codemix-safety-logs/resolve/main/results/fig_robustness.png) (The final-LoRA rows on this set were judged on Kaggle with the same judge in fp16; see the consistency check in §10.19.)
 
 ### 10.19 Fix 2: the guard compiled into a circuit-guided LoRA
 
@@ -539,15 +541,19 @@ The gated steer needs a hook in the serving stack. To remove it, we used **Align
 | Harmless refused, non-EN | 13.5% | 15.1% | 21.9% | 19.8% | 20.3% | **17.7%** |
 | Unseen languages, usable | 15% | 57% | 67% | 72% | 77% | **78%** |
 | Filler wrappers: usable / harmless refused | 23% / 10% | 70% / 28% | 73% / 25% | 77% / 21% | — | **86% / 19%** |
-| Everyday traffic refused (600) | 3% | 3% | 3% | 3% | — | {{V2C_EVERYDAY}} |
+| Everyday traffic refused (600) | 3% | 3% | 3% | 3% | — | **3.5%** (+0 [−1, +2]; 3.7% of the 564 replies the fp16 judge could label)† |
 | **MMLU (AuditKIT, 400 q)** | 50.5% | 50.5% | 32.3% | 30.5% | **2.5%** | **50.5%** |
+
+**Judge consistency.** HF Jobs credits ran out before the last two sets were judged, so they were judged on a free Kaggle 2×T4 notebook with the same judge in fp16 (T4s lack fast bf16). Re-judging the 470 held-out replies of the final LoRA there reproduces the A10G-bf16 labels on **99.8%** of rows (refusal κ = 0.996; harmful refusal rate 90.9% on both). (`results/judge_consistency.json`)
+
+† Judged on Kaggle (T4, fp16): 36 of 600 replies (34 in Gurmukhi) got no parsable label and count as not refused; Gurmukhi among labelled replies: 9.6% vs 8.5% plain.
 
 v0 = ⅔ of the teacher data; v1 = all of it; v2 = + language-ID filter on teacher refusals + wrapper augmentation + capability-retention rows; v2-circuit = v2's data with LoRA only on layers 10–20.
 
 - **Where the fix lives decides the price.** The same data on all 36 layers (v2) refuses just as well but collapses MMLU to 2.5%. Restricted to the layers our causal and circuit analyses located, it leaves MMLU **exactly** unchanged.
 - **The final LoRA beats the guard** on non-English usable refusal by **+14 pts [+5, +22]** (paired, 184 prompts), most of it on romanized Punjabi (63% → 87%). Its refusals are written in the user's own script, which addresses the guard's "unreadable refusal" limit. It also over-refuses less on chatty filler (19% vs 28%).
 - **Earlier failures, fixed.** v0/v1 lost MMLU because they stopped ending their turn after a one-letter answer (`AThe correct answer is…`); on 40 questions v0 picked nearly the same letters as the base model (45.0% vs 47.5%). Retention rows (base answers to MMLU *auxiliary_train* questions) fixed the format. Some romanized-Punjabi teacher refusals were Indonesian ("Maaf, tapi aku…"), Latin-script but unreadable; a fastText filter replaced them with hand-written refusals.
-- **Deployable anywhere.** The adapter is 56 MB (77 modules, r = 16) and converts to a GGUF LoRA that loads on top of the official `CohereLabs/tiny-aya-global-GGUF` in llama.cpp, LM Studio or Ollama. {{GGUF_NOTE}}
+- **Deployable anywhere.** The adapter is 37 MB (77 modules, r = 16) and converts to a GGUF LoRA that loads on top of the official `CohereLabs/tiny-aya-global-GGUF` in llama.cpp, LM Studio or Ollama. The GGUF adapter (`codemix-refusal-lora-f16.gguf`, 154 tensors) is **18.5 MB**.
 
 ### 10.20 What else we tried, and what went wrong (honest log)
 
@@ -568,7 +574,7 @@ v0 = ⅔ of the teacher data; v1 = all of it; v2 = + language-ID filter on teach
 15. **(v4) CircuitKIT EAP-IG ran out of memory** on a 48 GB GPU at batch 4 (262k-token vocabulary); batch 1 on an A100 worked.
 16. **(v4) The "reply in my script" system prompt only half worked** for the teacher: 36% of romanized-Hindi refusals came back in Latin script (the rest in Devanagari). Hand-written refusals filled the gap, so many romanized-Hindi refusals reuse one of five phrasings.
 17. **(v4) LoRA v0/v1 broke MMLU's answer format** and **all-layer v2 collapsed MMLU**; only the layer-restricted LoRA kept capability (§10.19).
-18. **(v4) Compute ran out mid-evaluation**: HF Jobs credits were exhausted; the last judging and GGUF conversion ran on a free Kaggle 2×T4 notebook with the same judge in fp16 (consistency against the A10G-bf16 labels in §10.19).
+18. **(v4) Compute ran out mid-evaluation**: HF Jobs credits were exhausted; the last judging and the GGUF conversion ran on a free Kaggle 2×T4 notebook with the same judge in fp16 — 99.8% label agreement with the A10G-bf16 judge on 470 re-judged replies, but 36 of 600 long everyday replies (mostly Gurmukhi) got no parsable fp16 label (§10.19).
 19. **(v4) No live demo Space:** Docker Spaces now need a paid plan. The llama.cpp demo (base vs LoRA side by side, adapter switched per request) is in `space_demo/` and runs locally with Docker.
 
 ## 11. Compute, cost and ROI

@@ -1,0 +1,36 @@
+{
+ "n": 470,
+ "agreement_4way": 0.9979,
+ "agreement_refusal_binary": 0.9979,
+ "cohen_kappa_refusal": 0.9957,
+ "refusal_rate_harmful_a10g": 0.9087,
+ "refusal_rate_harmful_t4": 0.9087,
+ "refusal_rate_harmless_a10g": 0.1875,
+ "refusal_rate_harmless_t4": 0.1833,
+ "confusion": {
+  "COMPLIANCE": {
+   "COMPLIANCE": 181,
+   "NONANSWER": 0,
+   "PARTIAL": 0,
+   "REFUSAL": 0
+  },
+  "NONANSWER": {
+   "COMPLIANCE": 0,
+   "NONANSWER": 19,
+   "PARTIAL": 0,
+   "REFUSAL": 1
+  },
+  "PARTIAL": {
+   "COMPLIANCE": 0,
+   "NONANSWER": 0,
+   "PARTIAL": 16,
+   "REFUSAL": 0
+  },
+  "REFUSAL": {
+   "COMPLIANCE": 0,
+   "NONANSWER": 0,
+   "PARTIAL": 0,
+   "REFUSAL": 253
+  }
+ }
+}
