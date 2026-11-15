@@ -86,7 +86,7 @@ def load_heldout(limit=None):
     fit = set(json.load(open(hf_hub_download(LOGS, "fit_ids.json", repo_type="dataset"))))
     df = df[~df.id.isin(fit)].reset_index(drop=True)
     if limit:  # stratified smoke test
-        df = df.groupby(["script", "label"], group_keys=False).apply(lambda g: g.head(limit)).reset_index(drop=True)
+        df = df.groupby(["script", "label"]).head(limit).reset_index(drop=True)
     return df
 
 
