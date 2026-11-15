@@ -29,6 +29,13 @@ authors:
 - **Fix.** (1) A 9 KB probe-gated steer at the located layer: 38% → **76%**, no training. (2) That behaviour distilled with **AlignTune** into a LoRA on only the located layers 10–20: **90%**, no hooks, MMLU unchanged, and 78% on four languages it never saw.
 - **Use it.** `codemix_eval.py` benchmarks *any* model for this failure in one command; the LoRA ships as a PEFT adapter and a GGUF for llama.cpp; [`reproduce.ipynb`](https://github.com/SunitSinghDhaliwal/lost-in-transliteration/blob/main/reproduce.ipynb) recomputes every headline number from the public logs on a CPU in about a minute.
 
+## What's new in v4.2 (final submission)
+
+- **`reproduce.ipynb`** recomputes the headline numbers (38% → 76% → 90%), their confidence intervals and the figure from the public logs on a CPU in about a minute, already executed so results are readable without running anything; on a GPU it also runs the plain model and the LoRA side by side.
+- **`codemix_eval.py`** runs the whole benchmark (generate → 4-way judge → language-ID → usable refusal) on any Hugging Face model in one command, so anyone can check their own model for this failure. It reproduces our published 90% for the LoRA exactly.
+- **Cleaner repo:** scripts grouped under `scripts/`, a `requirements.txt`, and a one-screen README.
+- **This article** is reorganised under the hackathon's 9 checklist headings (map below). No result changed.
+
 ## Headline results (held-out, judge-scored, usable refusal)
 
 | | Plain Tiny Aya | Fix 1: gated steer (no training) | **Fix 2: circuit-guided LoRA** |
@@ -686,7 +693,7 @@ Three items from our v3 plan are now done or started: **more languages** (zero-s
 
 ## 9. Team
 
-**Team LASTROUNDCLUTCH** (two members): Sunit Singh Dhaliwal ([@sunit12](https://huggingface.co/sunit12)) and Ramit Joshi.
+**Team LASTROUNDCLUTCH** (two members): Sunit Singh Dhaliwal ([@sunit12](https://huggingface.co/sunit12)) and Ramit Joshi ([@orionfax](https://huggingface.co/orionfax)).
 
 **Author contributions:**
 - **Sunit Singh Dhaliwal** (project lead) — conceived the central question (does Tiny Aya *know* a romanized Hindi/Punjabi request is harmful even when it does not refuse?) and designed the study end to end. Built the 4-script code-mixed safety benchmark and personally reviewed the Hindi and Punjabi translations as a native speaker; produced the blind human labels used to validate the LLM judge. Ran the mechanistic analysis: knows-vs-acts probing, language-ID diagnostics, causal patching and directional ablation, and EAP-IG circuit discovery with CircuitKIT. Designed and shipped both fixes: the probe-gated activation steer and the circuit-guided LoRA (layers 10–20, which lifts held-out non-English refusal from 38% to 90% with MMLU unchanged). Orchestrated ~120 GPU jobs across HF Jobs and Kaggle on a ~$18 budget, and wrote the paper.

@@ -59,6 +59,6 @@ On CPU with llama.cpp: `llama-cli -m tiny-aya-global-q4_k_m.gguf --lora codemix-
 
 Every script declares its dependencies inline (PEP 723), so `uv run` / `hf jobs uv run` needs no setup. Run scripts from the repo root. Kits used: **CuratorKIT, SafeTune, AuditKIT, CircuitKIT, AlignTune**. Models: Tiny Aya Global and Fire, Aya Expanse 8B (judge). Whole project ≈ $18 of GPU.
 
-**Team.** Sunit Singh Dhaliwal ([@sunit12](https://huggingface.co/sunit12), project lead: question, benchmark and native-speaker review, mechanism, both fixes) and Ramit Joshi (related work, critical review, independent testing, figures, deck and submission). Contributions in full in the [article](docs/hf-article.md#9-team).
+**Team.** Sunit Singh Dhaliwal ([@sunit12](https://huggingface.co/sunit12), project lead: question, benchmark and native-speaker review, mechanism, both fixes) and Ramit Joshi ([@orionfax](https://huggingface.co/orionfax), related work, critical review, independent testing, figures, deck and submission). Contributions in full in the [article](docs/hf-article.md#9-team).
 
 Tags: `v4.2-submission` (this version) · `v4.1-submission` · `v1.0-submission`. Models and data inherit CC-BY-NC-4.0 (Tiny Aya) and the dataset licences listed in the article.
