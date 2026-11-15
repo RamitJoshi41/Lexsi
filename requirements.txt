@@ -1,0 +1,12 @@
+# Reproduce notebook + benchmark tool (codemix_eval.py). Every script in scripts/ also declares its own
+# dependencies inline (PEP 723), so `uv run <script>` / `hf jobs uv run <script>` needs nothing else.
+pandas>=2.0
+numpy<2
+matplotlib>=3.7
+huggingface_hub>=0.34
+# GPU parts (live demo, full benchmark run)
+torch>=2.3
+transformers>=4.56
+peft>=0.12
+accelerate>=0.33
+fasttext-wheel>=0.9.2
