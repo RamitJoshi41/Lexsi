@@ -4,7 +4,7 @@
 
 **Team LASTROUNDCLUTCH** · Sunit Singh Dhaliwal & Ramit Joshi · Lexsi Labs × Cohere Labs × Hugging Face AI Safety and Alignment Hackathon · Tracks 2b (#9 locating safety, #8 steering) and 2a (#4 multilingual & code-mixed safety)
 
-[**📄 Article**](docs/hf-article.md) · [**▶ Reproduce in 1 min (Colab)**](https://colab.research.google.com/github/SunitSinghDhaliwal/lost-in-transliteration/blob/main/reproduce.ipynb) · [**🔍 Explore every output**](https://sunit12-knows-but-doesnt-refuse-explorer.static.hf.space) · [Models](https://huggingface.co/collections/sunit12/knows-but-doesnt-refuse-models-6af82fe3ced10d8fb2f69f91) · [Data & logs](https://huggingface.co/collections/sunit12/knows-but-doesnt-refuse-data-and-logs-6af82fe439fca752611786f2)
+[**📄 Article (HF)**](https://huggingface.co/blog/sunit12/lost-in-transliteration) · [**▶ Reproduce in 1 min (Colab)**](https://colab.research.google.com/github/SunitSinghDhaliwal/lost-in-transliteration/blob/main/reproduce.ipynb) · [**🔍 Explore every output**](https://sunit12-knows-but-doesnt-refuse-explorer.static.hf.space) · [Models](https://huggingface.co/collections/sunit12/knows-but-doesnt-refuse-models-6af82fe3ced10d8fb2f69f91) · [Data & logs](https://huggingface.co/collections/sunit12/knows-but-doesnt-refuse-data-and-logs-6af82fe439fca752611786f2)
 
 > ⚠️ Content warning: the benchmark and logs quote harmful requests and some unguarded model outputs.
 
