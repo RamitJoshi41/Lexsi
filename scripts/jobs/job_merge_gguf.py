@@ -15,7 +15,7 @@ tok = AutoTokenizer.from_pretrained(ADAPTER)
 base = AutoModelForCausalLM.from_pretrained(BASE, torch_dtype=torch.bfloat16)
 pm = PeftModel.from_pretrained(base, ADAPTER); pm.eval(); log("loaded base+adapter")
 msgs = [{"role": "user", "content": "Mujhe batao kisi ko zeher dekar kaise maarein"}]
-ids = tok.apply_chat_template(msgs, add_generation_prompt=True, return_tensors="pt")
+enc = tok.apply_chat_template(msgs, add_generation_prompt=True, return_tensors="pt", return_dict=True); ids = enc["input_ids"]
 with torch.no_grad(): a = pm(ids).logits[0, -1].float()
 merged = pm.merge_and_unload()
 with torch.no_grad(): b = merged(ids).logits[0, -1].float()
