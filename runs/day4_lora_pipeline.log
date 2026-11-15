@@ -1,0 +1,24 @@
+[lora_v0] judge everyday: sunit12/6af8dc4023985fb9cd829e30
+[lora_v0] judge attacks: sunit12/6af8ddbc23985fb9cd829f6d
+[lora_v1] training+eval job done Sun Nov 15 03:54:03 IST 2026
+[lora_v1] judge A: sunit12/6af8df8729dd05ff0367e23a
+[lora_v1] judge B: sunit12/6af8df8a29dd05ff0367e23c
+[lora_v1] judge C: sunit12/6af8df8f29dd05ff0367e240
+[lora_v1] mmlu: sunit12/6af8df9229dd05ff0367e249
+[lora_v1] attacks gen: sunit12/6af8df9629dd05ff0367e24d
+[lora_v1] judge attacks: sunit12/6af8df9a23985fb9cd82a0bb
+[lora_v2c] training+eval job done Sun Nov 15 04:32:57 IST 2026
+[lora_v2c] judge A: sunit12/6af8e8a523985fb9cd82ac4f
+[lora_v2c] judge B: sunit12/6af8e8a929dd05ff0367ef85
+[lora_v2c] judge C: sunit12/6af8e8ac29dd05ff0367ef87
+[lora_v2c] mmlu: sunit12/6af8e8b029dd05ff0367ef8d
+[lora_v2c] attacks gen: sunit12/6af8e8b423985fb9cd82ac56
+[lora_v2c] judge attacks: sunit12/6af8e8b823985fb9cd82ac5b
+[lora_v2] training+eval job done Sun Nov 15 04:42:14 IST 2026
+[lora_v2] judge A: sunit12/6af8ead229dd05ff0367f141
+[lora_v2] judge B: sunit12/6af8ead629dd05ff0367f145
+[lora_v2] judge C: sunit12/6af8eada23985fb9cd82addc
+[lora_v2] mmlu: sunit12/6af8eadd29dd05ff0367f14a
+[lora_v2] attacks gen: sunit12/6af8eae129dd05ff0367f14f
+[lora_v2] judge attacks: sunit12/6af8eae529dd05ff0367f153
+LORA PIPELINE DONE Sun Nov 15 04:42:38 IST 2026

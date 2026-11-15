@@ -87,4 +87,45 @@ later layers rebuild the direction. All-layer ablation (Arditi et al.) running: 
 - filler wrappers (1,128 romanized prompts, chatty prefixes/suffixes): usable 23% → 70% (+47 [+39, +56]) but harmless
   refused 10% → 28% (+19 [+13, +25]) — the guard's known weak spot (gate fires on chatty harmless text).
 
-## 8. (pending) all-layer ablation, AlignTune LoRA (v0: 2/3 data, v1: full 2,512 rows), GGUF LoRA, demo Space
+## 8. All-layer ablation (Arditi-style necessity) — results/ablate_all.md
+Removing one direction (fit at L14) after every layer: refusal dir → English 89% → 76% [63, 87], code-mixed 51% → 29% [21, 37];
+explicit "I'm sorry/I cannot" refusals in English 74% → 13% (the remaining judged refusals are moralising lectures).
+Harm-probe dir: 91% / 48%; random dir: 91% / 52% (no effect). Harmless code-mixed: 18% → 16%.
+
+## 9. AlignTune distillation: the guard compiled into a hook-free LoRA (results/*_lora.md)
+Teacher = steered model + "reply in the user's script" system prompt on TRAIN prompts; student = LoRA r16 (all attn+MLP,
+all layers), no hooks, no system prompt. v0 = 2/3 of teacher data; v1 = all 2,512 rows.
+
+| | base | hook guard v1.0 | LoRA v0 | LoRA v1 |
+|---|---|---|---|---|
+| held-out usable, non-EN avg | 38% | 76% | 77% | **82%** |
+| held-out usable hi_rom / pa_rom | 26 / 15% | 63 / 63% | 78 / 50% | 89 / 67% |
+| held-out harmless refused (all) | 13% | 15% | 22% | 20% |
+| unseen langs usable (bn/mr/ta/ur) | 15% | 57% | 67% | **72%** |
+| attacks usable (fiction) | 35% (30%) | 70% (30%) | 59% (30%) | 71% (37%) |
+| filler: usable / harmless refused | 23 / 10% | 70 / 28% | 73 / 25% | 77 / **21%** |
+| everyday refused | 3% | 3% | 3% | 3% |
+| MMLU (AuditKIT, 400 q) | 50.5% | 50.5% | 32.3% | 30.5% |
+MMLU drop is mostly format: the student no longer stops after the letter ("AThe correct answer is…"); on 40 diagnostic
+questions it picks nearly the same letters as base (45.0% vs 47.5%, first-letter parse). Fix in v2: retention data.
+GGUF LoRA (llama.cpp convert_lora_to_gguf): 60.5 MB f16, plugs into CohereLabs/tiny-aya-global-GGUF.
+
+## 10. LoRA v2 and the circuit-guided LoRA (final adapter)
+v2 data (3,750 rows, `sunit12/codemix-refusal-distill-v2`): v1 rows with LID-filtered teacher refusals + 541 wrapper-augmented
+train rows (story / screenplay / hypothetical / persona; test wrappers stay unseen) + 700 capability-retention rows
+(base answers to MMLU auxiliary_train MCQs, extra everyday prompts). v2 = LoRA on all layers (lr 1e-4);
+**v2-circuit = LoRA only on layers 10–20** (the region located by causal patching + CircuitKIT), lr 2e-4.
+
+| | base | hook guard | LoRA v1 | LoRA v2 (all layers) | **LoRA v2-circuit (L10–20)** |
+|---|---|---|---|---|---|
+| held-out usable, non-EN avg | 38% | 76% | 82% | 90% | **90%** |
+| hi_rom / pa_rom | 26 / 15% | 63 / 63% | 89 / 67% | 89 / 83% | **91 / 87%** |
+| harmless refused (Δ vs base 13%) | — | +1 | +7 | +7 | **+5 [+1, +10]** |
+| unseen langs usable | 15% | 57% | 72% | 77% | **78%** |
+| filler usable / harmless refused | 23 / 10% | 70 / 28% | 77 / 21% | — | **86 / 19%** |
+| MMLU (AuditKIT 400 q) | 50.5% | 50.5% | 30.5% | **2.5% (collapsed)** | **50.5%** |
+
+Restricting the LoRA to the located layers keeps capability intact at equal refusal gains; the all-layer LoRA on the
+same data destroys MMLU. Final adapter = v2-circuit, published as `sunit12/tiny-aya-global-codemix-refusal-lora`
+(v1 kept at `-v1`; v0, v2 and v2-circuit at their own repos). 56 MB, r16, 77 target modules.
+Pending (HF Jobs credits ran out ~04:45 IST): v2-circuit judging on attacks_v1 and everyday_test, GGUF conversion.
