@@ -13,10 +13,13 @@ from auditkit.model import CallableModel
 from auditkit.scenarios.mmlu import MMLUScenario
 from auditkit.types import Direction
 
+def is_correct(target, output):
+    m = re.search(r"\b([ABCD])\b", (output or "").strip().upper())
+    return m is not None and m.group(1) == target
+
 @ak.scorer(direction=Direction.MAXIMIZE, name="mcq_acc")
 def mcq_acc(sample, output):
-    m = re.search(r"\b([ABCD])\b", (output or "").strip().upper())
-    return float(m is not None and m.group(1) == sample.target)
+    return float(is_correct(sample.target, output))
 
 REPO, MODEL_ID = sys.argv[1], sys.argv[2]; N = int(sys.argv[3]) if len(sys.argv) > 3 else 400
 TAG = MODEL_ID.split("/")[-1]; ADD_L, ALPHA, BS = 14, 1.0, 16
@@ -43,6 +46,7 @@ if ADAPTER:
     lora_model = PeftModel.from_pretrained(AutoModelForCausalLM.from_pretrained(MODEL_ID, dtype=torch.bfloat16, device_map="cuda"), ADAPTER).merge_and_unload().eval()
 W = torch.tensor(g["w"], device="cuda"); B = float(g["b"]); V = torch.tensor(v, dtype=torch.bfloat16, device="cuda")
 st = {"mask": None, "fired": []}
+answers = {"base": {}, "guarded": {}}   # prompt -> raw reply, per side: lets anyone check which answers changed
 def gate_hook(mod, inp, out):
     h = out[0] if isinstance(out, tuple) else out
     if h.shape[1] > 1:
@@ -65,6 +69,7 @@ def make_fn(guard):
             gen = mdl.generate(**enc, max_new_tokens=8, do_sample=False, pad_token_id=tok.pad_token_id)
             outs += [tok.decode(gen[j, enc["input_ids"].shape[1]:], skip_special_tokens=True) for j in range(len(chunk))]
         for h in hs: h.remove()
+        answers["guarded" if guard else "base"].update(zip(prompts, outs))
         return outs
     return fn
 
@@ -80,9 +85,42 @@ for name, guard in [("base", False), ("guarded", True)]:
     res[name] = r
     log(name, "headline:", r.headline, "| gate fired on", sum(st["fired"]), "/", len(st["fired"]) if guard else "-")
 cmp = ak.compare(res["base"], res["guarded"])
+
+def _try(f):  # the GPU work is done by now: one failing report field must not lose the rest of the summary
+    try: return f()
+    except Exception as e: return {"error": repr(e)}
+
+# str(cmp) is only the object repr (RunComparison has no __str__), so store its report fields explicitly.
+# sample_summary counts answers that flipped between base and guarded; significance is a paired-bootstrap CI.
+comparison = {"summary": _try(cmp.summary),
+              "metric_deltas": _try(lambda: [{k: getattr(v, "value", v) for k, v in vars(d).items()} for d in cmp.metric_deltas()]),
+              "significance": _try(lambda: cmp.significance("mcq_acc")),
+              "sample_summary": _try(lambda: cmp.sample_summary("mcq_acc"))}
+# Per-question record + our own flip count and paired bootstrap CI (independent of the AuditKIT API)
+def answer_for(side, question):  # AuditKIT may wrap the prompt it sends, so fall back to "sent prompt contains the question"
+    a = answers[side]
+    if question in a: return a[question]
+    hits = [v for k, v in a.items() if question in k]
+    return hits[0] if len(hits) == 1 else None
+pq = pd.DataFrame([{"q": i, "target": smp.target, "base": answer_for("base", smp.input), "guarded": answer_for("guarded", smp.input)}
+                   for i, smp in enumerate(samples)])
+for c in ["base", "guarded"]:
+    pq[c + "_correct"] = [float(is_correct(t, o)) for t, o in zip(pq.target, pq[c])]
+mq = pq[pq.base.notna() & pq.guarded.notna()]; matched = len(mq)
+d = (mq.guarded_correct - mq.base_correct).values
+boot = [d[rng.integers(0, len(d), len(d))].mean() for _ in range(2000)]
+per_question = {"matched": matched, "answers_changed": int((mq.base.str.strip() != mq.guarded.str.strip()).sum()),
+                "newly_correct": int(((mq.base_correct == 0) & (mq.guarded_correct == 1)).sum()),
+                "newly_wrong": int(((mq.base_correct == 1) & (mq.guarded_correct == 0)).sum()),
+                "delta": float(d.mean()), "delta_ci95": [float(np.percentile(boot, 2.5)), float(np.percentile(boot, 97.5))]}
+log("per question:", per_question)
+if matched < len(pq): log(f"WARNING: only {matched}/{len(pq)} questions matched to a reply; per-question numbers cover those only")
 summary = {"n": N, "base": res["base"].headline, "guarded": res["guarded"].headline,
-           "gate_fired": int(sum(st["fired"])), "comparison": str(cmp)[:3000]}
+           "gate_fired": int(sum(st["fired"])), "per_question": per_question, "comparison": comparison}
 print(json.dumps(summary, indent=1, default=str), flush=True)
 json.dump(summary, open("capability.json", "w"), indent=1, default=str)
-HfApi().upload_file(path_or_fileobj="capability.json", path_in_repo=f"runs/capability_{TAG}_{(ADAPTER.split('/')[-1]) if ADAPTER else GATE_FILE.replace('.npz', '')}{'_' + QUANT if QUANT else ''}.json", repo_id=REPO, repo_type="dataset")
+OUT = f"runs/capability_{TAG}_{(ADAPTER.split('/')[-1]) if ADAPTER else GATE_FILE.replace('.npz', '')}{'_' + QUANT if QUANT else ''}"
+pq.to_json("capability_per_question.jsonl", orient="records", lines=True, force_ascii=False)
+HfApi().upload_file(path_or_fileobj="capability.json", path_in_repo=OUT + ".json", repo_id=REPO, repo_type="dataset")
+HfApi().upload_file(path_or_fileobj="capability_per_question.jsonl", path_in_repo=OUT + "_per_question.jsonl", repo_id=REPO, repo_type="dataset")
 log("DONE")

@@ -78,7 +78,29 @@ def paired_bootstrap(a, b, col="usable", n=2000, seed=0):
     return m[col + "_b"].mean() - m[col + "_a"].mean(), np.percentile(d, 2.5), np.percentile(d, 97.5)
 
 
+def kappa(a, b):
+    """Cohen's kappa between two equal-length label sequences (any hashable labels)."""
+    import pandas as pd
+    a, b = pd.Series(list(a)), pd.Series(list(b))
+    po = (a.values == b.values).mean()
+    pe = sum(a.eq(l).mean() * b.eq(l).mean() for l in set(a) | set(b))
+    return float("nan") if pe == 1 else float((po - pe) / (1 - pe))
+
+
 # ---------------------------------------------------------------- data
+# The three held-out runs behind the headline table (paths inside the logs repo, also used locally if present)
+HEADLINE_RUNS = {"base": "runs/steer/tiny-aya-global/gen_control_a0_judged4_lid.jsonl",
+                 "steer": "runs/steer/tiny-aya-global/gen_g3_14_judged4_lid.jsonl",
+                 "lora": "runs/lora/tiny-aya-global/gen_lora_v2c_heldout_judged4_lid.jsonl"}
+
+def load_log(path):
+    """A run log from the repo if present, else from the public logs dataset."""
+    import pandas as pd
+    if not os.path.exists(path):
+        from huggingface_hub import hf_hub_download
+        path = hf_hub_download(LOGS, path, repo_type="dataset")
+    return pd.read_json(path, lines=True)
+
 def load_heldout(limit=None):
     import pandas as pd
     from huggingface_hub import hf_hub_download
@@ -116,6 +138,21 @@ def generate(df, model_id, adapter=None, bs=16, max_new_tokens=160):
     del model; gc.collect(); torch.cuda.empty_cache()
     df = df.copy(); df["response"] = out; return df
 
+def judge_input(tok, q, r, max_len=1400):
+    """Judge prompt for one (request, reply) pair, at most max_len tokens.
+    Only the reply is shortened. Truncating the whole prompt would cut its END: the "Answer with one word"
+    line and the generation prompt. Prompts that already fit are unchanged (same as the paper pipeline)."""
+    build = lambda r: tok.apply_chat_template([{"role": "user", "content": JUDGE_PROMPT.format(q=q, r=r)}],
+                                              add_generation_prompt=True, tokenize=False)
+    r = (r or "")[:1000]; text = build(r)
+    over = len(tok(text, add_special_tokens=False).input_ids) - max_len
+    if over > 0:
+        ids = tok(r, add_special_tokens=False).input_ids; keep = len(ids) - over
+        while over > 0 and keep > 0:  # re-tokenizing at the cut can shift the count by a few tokens
+            text = build(tok.decode(ids[:keep]) + " …")
+            over = len(tok(text, add_special_tokens=False).input_ids) - max_len; keep -= max(over, 1)
+    return text
+
 def judge(df, judge_id="CohereLabs/aya-expanse-8b", bs=12):
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -124,10 +161,8 @@ def judge(df, judge_id="CohereLabs/aya-expanse-8b", bs=12):
     model = AutoModelForCausalLM.from_pretrained(judge_id, dtype=_dtype(), device_map="auto").eval()
     labs = []
     for i in range(0, len(df), bs):
-        texts = [tok.apply_chat_template([{"role": "user", "content": JUDGE_PROMPT.format(q=q, r=(r or "")[:1000])}],
-                                         add_generation_prompt=True, tokenize=False)
-                 for q, r in zip(df.text[i:i + bs], df.response[i:i + bs])]
-        enc = tok(texts, return_tensors="pt", padding=True, add_special_tokens=False, truncation=True, max_length=1400).to(model.device)
+        texts = [judge_input(tok, q, r) for q, r in zip(df.text[i:i + bs], df.response[i:i + bs])]
+        enc = tok(texts, return_tensors="pt", padding=True, add_special_tokens=False).to(model.device)
         with torch.no_grad():
             g = model.generate(**enc, max_new_tokens=6, do_sample=False, pad_token_id=tok.pad_token_id)
         for x in g:

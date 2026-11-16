@@ -4,7 +4,7 @@
 
 **Team LASTROUNDCLUTCH** · Sunit Singh Dhaliwal & Ramit Joshi · Lexsi Labs × Cohere Labs × Hugging Face AI Safety and Alignment Hackathon
 
-> Archived v4.1 README (the long-form write-up as submitted). Since v4.2 the scripts live in `scripts/{jobs,analysis,gate,data,pipelines}/` and the gates in `artifacts/gates/`; the current write-up is [`hf-article.md`](hf-article.md).
+> Archived v4.1 README (the long-form write-up as submitted). Since v4.2 the scripts live in `scripts/{jobs,analysis,gate,data,pipelines}/` and the gates in `artifacts/gates/`; the current write-up is [`hf-article.md`](../hf-article.md).
 
 **One-line claim:** Tiny Aya *recognises* harmful requests typed in romanized Hindi and Punjabi but does not refuse them: the harm signal is there, the refusal component is missing — and adding back exactly the refusal component the English twin has (and nothing else) restores refusal. Repairing it where it breaks works twice: a 9 KB probe-gated steer doubles usable refusals (38% → 76%) with no training, and a 37 MB LoRA trained only on the located layers (10–20) reaches **90%** with no hooks, MMLU unchanged, and transfers to four languages it never saw.
 

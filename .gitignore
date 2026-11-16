@@ -7,3 +7,6 @@ __pycache__/
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
+
+# blinding keys for human validation: keep away from labellers
+validation/private/

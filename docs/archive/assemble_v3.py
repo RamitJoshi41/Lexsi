@@ -1,11 +1,11 @@
 import re
-v2 = open("docs/hf-article-v2.md").read()
+v2 = open("docs/archive/hf-article-v2.md").read()
 def sec(text, start, end=None):
     i = text.index(start); j = text.index(end, i + len(start)) if end else len(text)
     return text[i:j].rstrip() + "\n\n"
-front = open("docs/v3_front.md").read().rstrip() + "\n\n"
-draft = open("docs/new_sections_draft.md").read()
-back = open("docs/v3_back.md").read()
+front = open("docs/archive/v3_front.md").read().rstrip() + "\n\n"
+draft = open("docs/archive/new_sections_draft.md").read()
+back = open("docs/archive/v3_back.md").read()
 judges = sec(draft, "## For judges: one minute", "## Threat model").replace(
     "survives 4-bit quantization (TBD)", "same gain on the 4-bit model (39% → 76%) and on Tiny Aya Fire (47% → 76%)")
 threat = sec(draft, "## Threat model", "## Over-refusal test sets").replace("## Threat model", "## 2. Threat model")
@@ -30,8 +30,8 @@ p5 += "**Languages covered:** English, Hindi and Punjabi, each in native script 
 p5 += "**CuratorKIT filtering:** every script of the benchmark went 188 → 188 rows through schema gate, exact dedup, MinHash dedup (0.85) and text cleaning — nothing removed, because parallel versions of a prompt are curated per script. Provenance files ship with the dataset.\n\n"
 p5 += "**Attack prompt set** — grouped by attack family in §2 (script switch, romanization, transliteration, SMS spelling, typos, chatty wrappers, unseen harm categories).\n\n"
 p5 += overref + splits
-metrics = open("docs/v3_metrics.md").read().replace("## Metrics, and why these", "## 8. Metrics, and why these").rstrip() + "\n\n"
-hp = "## 9. Method and experimental setup\n\n" + open("docs/v3_hparams.md").read().replace("### Setup and hyperparameters, per repo", "### Setup and hyperparameters, per repo").rstrip() + "\n\n**Seeds and determinism.** Greedy decoding everywhere; data splits, bootstrap and MMLU sampling use seed 0. **Ablations:** gate v2 vs v3 vs v3.1, layer and threshold sweep, gated vs always-on, English vs in-language vectors, English vs all-script CAST calibration, bf16 vs nf4, Global vs Fire.\n\n"
+metrics = open("docs/archive/v3_metrics.md").read().replace("## Metrics, and why these", "## 8. Metrics, and why these").rstrip() + "\n\n"
+hp = "## 9. Method and experimental setup\n\n" + open("docs/archive/v3_hparams.md").read().replace("### Setup and hyperparameters, per repo", "### Setup and hyperparameters, per repo").rstrip() + "\n\n**Seeds and determinism.** Greedy decoding everywhere; data splits, bootstrap and MMLU sampling use seed 0. **Ablations:** gate v2 vs v3 vs v3.1, layer and threshold sweep, gated vs always-on, English vs in-language vectors, English vs all-script CAST calibration, bf16 vs nf4, Global vs Fire.\n\n"
 res = sec(v2, "## 6. Experiments and findings", "## 7. Limitations").replace("## 6. Experiments and findings", "## 10. Results and findings")
 for a, b in [("### 6.1 ", "### 10.1 "), ("### 6.2 ", "### 10.2 "), ("### 6.3 ", "### 10.3 "), ("### 6.4 ", "### 10.4 "), ("### 6.5 ", "### 10.6 "), ("### 6.6 ", "### 10.7 "), ("### 6.7 ", "### 10.8 "), ("### 6.8 ", "### 10.14 ")]:
     res = res.replace(a, b)
@@ -111,5 +111,5 @@ appendix = """## Appendix A — Judge prompt (Aya Expanse 8B, greedy, ≤6 new t
 Full per-script tables, bootstrap CIs, leak-check examples, transliteration and filler results: `results/final_v2.md`, `results/bootstrap_ci.md`, `results/leak_check_examples.jsonl`, `results/translit.md`, `results/gate_v3_1.json`, `results/gate_v3_fire.json` (logs repo and GitHub).
 """
 out = front + judges + p1 + threat + p2 + related + p3 + p4 + p5 + metrics + hp + res + compute + lim + credits + art + repro + team + llm + refs + appendix
-open("docs/hf-article-v3.md", "w").write(out)
+open("docs/archive/hf-article-v3.md", "w").write(out)
 print(len(out.split()), "words")

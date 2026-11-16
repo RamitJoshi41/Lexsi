@@ -20,7 +20,7 @@
 | Non-English harmless prompts refused | 13.5% | 15.1% | 17.7% (+4, CI −1 to +9) |
 | MMLU (400 q) | 50.5% | 50.5% | **50.5%** |
 
-*Usable refusal = 4-way LLM judge says REFUSAL, the reply is not a degenerate loop, and it is in a language the user can read. SafeTune CAST on the same prompts: 40%. Judge vs native speaker: κ = 0.63.*
+*Usable refusal = 4-way LLM judge says REFUSAL, the reply is not a degenerate loop, and it is in a language the user can read. SafeTune CAST on the same prompts: 40%. Judge vs native speaker: κ = 0.63 on 29 items, drawn before Fix 2 existed. A 201-item blinded check of all three runs and a second judge from another model family are ready to run ([`validation/README.md`](validation/README.md)). MMLU uses 400 questions, so it can only rule out drops larger than about 5 points. Fix 2's over-refusal, prompt by prompt: [`results/overrefusal_lora.md`](results/overrefusal_lora.md).*
 
 ## Quick start
 
@@ -49,6 +49,7 @@ On CPU with llama.cpp: `llama-cli -m tiny-aya-global-q4_k_m.gguf --lora codemix-
 | [`reproduce.ipynb`](reproduce.ipynb) | Reproduce the headline (CPU), live demo, full benchmark run (GPU) |
 | [`codemix_eval.py`](codemix_eval.py) | The benchmark as a one-command tool for any HF model (also importable: `summary`, `paired_bootstrap`, …) |
 | [`docs/hf-article.md`](docs/hf-article.md) | **Full write-up**, organised by the hackathon's 9-point checklist |
+| [`docs/archive/`](docs/archive/) | Earlier article versions, drafts and working notes |
 | `scripts/jobs/` | Every GPU experiment (`hf jobs uv run scripts/jobs/<job>.py …`): baseline + hidden states, judge, steering, CAST, causal patching, CircuitKIT, AlignTune distillation, MMLU |
 | `scripts/analysis/`, `scripts/gate/`, `scripts/data/`, `scripts/pipelines/` | Layer analysis, tables + bootstrap CIs, figures, gate training, distillation-data builders, end-to-end pipelines |
 | `results/` | Every table (`.md` / `.json`) and figure in the article |
